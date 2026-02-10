@@ -1,8 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Header } from '@/components/header'
-import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
@@ -10,8 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function Auth() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <section className="min-h-screen flex flex-col">
 
       <section className="flex-1 py-16 bg-gray-50">
         <div className="max-w-md mx-auto px-4">
@@ -109,7 +106,6 @@ export default function Auth() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </section>
   )
 }

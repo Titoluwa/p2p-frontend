@@ -7,16 +7,11 @@ import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ArrowRight, Zap } from 'lucide-react'
+import { Hero } from '@/components/home/hero'
+import { Partners } from '@/components/home/partners'
+import { WhyChooseUs } from '@/components/home/why-choose-us'
 
 export default function Home() {
-  const partners = [
-    { id: 1, name: 'LogoIpsum', icon: '🏢' },
-    { id: 2, name: 'LogoIpsum', icon: '🏢' },
-    { id: 3, name: 'LogoIpsum', icon: '🏢' },
-    { id: 4, name: 'LogoIpsum', icon: '🏢' },
-    { id: 5, name: 'LogoIpsum', icon: '🏢' },
-  ]
-
   const services = [
     {
       id: 1,
@@ -89,70 +84,11 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <Hero/>
+      <Partners/>
       
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1C4AB0] to-[#2563EB] text-white py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <Image
-            src="/placeholder.svg"
-            alt="Port background"
-            fill
-            className="object-cover"
-          />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="flex items-center gap-2 mb-4 bg-yellow-400 bg-opacity-20 w-fit px-3 py-1 rounded-full">
-                <span className="text-sm font-semibold">🚢 Best Vehicle Freight Shipping</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance leading-tight">
-                Vehicle & RORO Shipping from Port 2 Port, Made Simple
-              </h1>
-              <p className="text-base md:text-lg text-gray-100 mb-8">
-                Ship cars, trucks, heavy equipment and more with full tracking, secure payments, and expert handling.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/services">
-                  <Button className="bg-white text-primary hover:bg-gray-100">
-                    Request a Quote
-                  </Button>
-                </Link>
-                <Link href="/how-it-works">
-                  <Button variant="outline" className="border-white text-white hover:bg-white hover:bg-opacity-10 bg-transparent">
-                    How it Works
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden bg-gray-900">
-              <Image
-                src="/placeholder.svg"
-                alt="Shipping vessel"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <WhyChooseUs/>
 
-      {/* Partners Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center text-gray-600 font-semibold mb-8">Our Beloved Partners</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {partners.map((partner) => (
-              <div key={partner.id} className="flex items-center justify-center p-4 border border-gray-200 rounded-lg hover:border-primary hover:shadow-md transition-all">
-                <span className="text-3xl">{partner.icon}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
