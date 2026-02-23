@@ -41,9 +41,15 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/auth" className="hidden sm:block">
+          <Link href="/sign-in" className="hidden sm:block">
             <Button className="bg-primary hover:bg-primary-dark text-white">
-              Sign In/Sign up
+              Sign In
+            </Button>
+          </Link>
+
+          <Link href="/sign-up" className="hidden sm:block">
+            <Button className="bg-primary hover:bg-primary-dark text-white">
+              Sign Up
             </Button>
           </Link>
 

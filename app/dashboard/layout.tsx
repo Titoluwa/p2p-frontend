@@ -1,34 +1,70 @@
-import React from "react"
+"use client"
+
+import React, { useEffect, useState } from "react"
 import { DashboardSidebar } from '@/components/dashboard/sidebar'
 import { Button } from '@/components/ui/button'
-import { Settings } from 'lucide-react'
+import { Settings, Menu } from 'lucide-react'
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [user, setUser] = useState({
+    name: 'Kunle Remi',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  })
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [])
+
   return (
     <div className="flex h-screen bg-gray-50">
-      <DashboardSidebar />
-      
-      <div className="flex-1 ml-64 flex flex-col">
+      <DashboardSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
+      {/* Main content — offset by sidebar width on desktop only */}
+      <div className="flex-1 md:ml-64 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-          <div />
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="text-gray-600 hover:bg-gray-100">
-              <Settings className="w-5 h-5" />
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 flex items-center justify-between">
+          {/* Hamburger — mobile only */}
+          <div className="flex space-x-5">
+            <button
+              className="md:hidden text-gray-500 hover:text-gray-700 transition-colors border border-[#E5E7EB] rounded-sm p-2"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            {/* logo placeholder */}
+            <div className="w-28 h-10 bg-[#C4C4C4] md:hidden" />
+          </div>
+
+          {/* Spacer on desktop */}
+          <div className="hidden md:block" />
+
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              className="text-[#6B7280] hover:bg-gray-100 sm:border border-0 border-[#6B7280] h-[48px] w-[48px] p-0"
+            >
+              <Settings className="w-6 h-6" />
             </Button>
-            <div className="flex items-center gap-3 px-4 py-2 bg-gray-100 rounded-lg">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-400 to-red-600" />
-              <span className="font-medium text-gray-900">Kunle Remi</span>
+            <div className="flex items-center gap-3 px-4 py-2 rounded-lg sm:border border-0 border-[#6B7280]">
+              <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
+              <span className="font-medium text-[#6B7280] hidden sm:inline">{user.name}</span>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto p-8">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

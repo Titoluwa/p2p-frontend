@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { ShipmentCard } from '@/components/dashboard/shipment-card'
 import { ActivityTimeline } from '@/components/dashboard/activity-timeline'
-import { FileText, Truck, ArrowRight } from 'lucide-react'
+import { FileText, Truck } from 'lucide-react'
 
 export default function DashboardPage() {
   const shipments = [
@@ -25,62 +25,36 @@ export default function DashboardPage() {
   ]
 
   const activities = [
-    {
-      id: '1',
-      title: 'Shipment SHP-2026-001 is now in transit',
-      date: '28/01/2026',
-      type: 'success' as const,
-    },
-    {
-      id: '2',
-      title: 'Document uploaded for SHP-2026-003',
-      date: '28/01/2026',
-      type: 'document' as const,
-    },
-    {
-      id: '3',
-      title: 'Vehicle received for SHP-2026-003',
-      date: '28/01/2026',
-      type: 'success' as const,
-    },
-    {
-      id: '4',
-      title: 'New quote request submitted',
-      date: '28/01/2026',
-      type: 'info' as const,
-    },
+    { id: '1', title: 'Shipment SHP-2026-001 is now in transit', date: '28/01/2026', type: 'success' as const },
+    { id: '2', title: 'Document uploaded for SHP-2026-003', date: '28/01/2026', type: 'document' as const },
+    { id: '3', title: 'Vehicle received for SHP-2026-003', date: '28/01/2026', type: 'success' as const },
+    { id: '4', title: 'New quote request submitted', date: '28/01/2026', type: 'info' as const },
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       {/* Welcome Section */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Kunle</h1>
-        <p className="text-gray-600">Here's what's happening with your shipments</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Welcome back, Kunle</h1>
+        <p className="text-gray-600 text-sm sm:text-base">Here's what's happening with your shipments</p>
       </div>
 
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <Link href="/dashboard/quote">
-          <Card className="p-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white hover:shadow-lg transition-shadow cursor-pointer border-0">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">Request a Quote</h2>
-                <p className="text-gray-300">Start a new shipment request</p>
-              </div>
-              <FileText className="w-12 h-12 opacity-20" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <Link href="/quote">
+          <Card className="p-4 sm:p-6 bg-[#111827] text-white hover:shadow-lg transition-shadow cursor-pointer border-[#6B7280] text-center">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <FileText className="w-10 h-10" />
+              <h2 className="text-[20px] font-semibold mb-1">Request a Quote</h2>
             </div>
           </Card>
         </Link>
 
         <Link href="/track">
-          <Card className="p-8 hover:shadow-lg transition-shadow cursor-pointer">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Track Shipment</h2>
-                <p className="text-gray-600">Monitor your active shipments</p>
-              </div>
-              <Truck className="w-12 h-12 text-primary opacity-20" />
+          <Card className="p-4 sm:p-6 bg-white text-black hover:shadow-lg transition-shadow cursor-pointer border-[#6B7280] text-center">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <Truck className="w-10 h-10" />
+              <h2 className="text-[20px] font-semibold mb-1">Track Shipment</h2>
             </div>
           </Card>
         </Link>
@@ -88,12 +62,11 @@ export default function DashboardPage() {
 
       {/* Active Shipments */}
       <div>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Active Shipments</h2>
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Active Shipments</h2>
           <Link href="/dashboard/shipments">
             <button className="text-primary hover:underline text-sm font-semibold flex items-center gap-1">
               View all
-              <ArrowRight className="w-4 h-4" />
             </button>
           </Link>
         </div>
@@ -114,9 +87,8 @@ export default function DashboardPage() {
 
       {/* Recent Activity */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-
-        <Card className="p-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Recent Activity</h2>
+        <Card className="p-5 sm:p-8">
           <ActivityTimeline activities={activities} />
         </Card>
       </div>
