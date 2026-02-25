@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useAuth } from '@/lib/context/auth-context'
+import { useRouter } from 'next/navigation'
 
 export default function SignUpPage() {
     const [formData, setFormData] = useState({
@@ -17,6 +19,11 @@ export default function SignUpPage() {
         agreeTerms: false,
         subscribeNewsletter: false,
     })
+    const [isLoading, setIsLoading] = useState(false)
+    const [frontError, setFrontError] = useState<string | null>(null)
+    const { register, error } = useAuth()
+    const displayError = frontError || error
+    const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target
@@ -24,11 +31,39 @@ export default function SignUpPage() {
             ...prev,
             [name]: type === 'checkbox' ? checked : value,
         }))
+        if (frontError) setFrontError(null)
     }
 
-    const handleSubmit = (e: React.SubmitEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('Signup data:', formData)
+        setFrontError(null)
+
+        if (!formData.agreeTerms) {
+            setFrontError('Please agree to the Terms and Privacy Policy')
+            return
+        }
+
+        setIsLoading(true)
+
+        try {
+            await register({
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+            })
+            router.push('/dashboard')
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setFrontError(err.message)
+            } else {
+                setFrontError('Something went wrong. Please try again.')
+            }
+        // } catch (err) {
+        //     setFrontError(err instanceof Error ? err.message : 'Registration failed')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -133,12 +168,20 @@ export default function SignUpPage() {
                                 </div>
                             </div>
 
-                            <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white text-base font-semibold py-6 mb-16">
-                                Create Account
+                            {displayError && (
+                                <div className="mb-4 rounded-md border border-red-300 bg-red-50 p-3">
+                                    <p className="text-sm text-red-600 font-medium">
+                                        {displayError}
+                                    </p>
+                                </div>
+                            )}
+
+                            <Button type="submit" disabled={isLoading} className="w-full bg-primary hover:bg-primary-dark text-white text-base font-semibold py-6 mb-16">
+                                {isLoading ? 'Creating Account...' : 'Create Account'}
                             </Button>
                         </form>
 
-                        <p className="text-sm text-gray-600 mt-4">
+                        <p className="text-sm text-gray-600 mt-3">
                             Already have an account?{' '}
                             <Link href="/sign-in" className="text-primary font-semibold hover:underline">
                                 Log in

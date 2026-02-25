@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { LayoutGrid, Ship, FileText, CreditCard, LogOut, X } from 'lucide-react'
+import { useAuth } from '@/lib/context/auth-context'
 
 const navItems = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
@@ -17,8 +18,15 @@ interface DashboardSidebarProps {
   onClose?: () => void
 }
 
-export function DashboardSidebar({ isOpen, onClose }: Readonly<DashboardSidebarProps>) {
+export function DashboardSidebar({ isOpen, onClose}: Readonly<DashboardSidebarProps>) {
   const pathname = usePathname()
+  const { logout } = useAuth()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await logout()
+    router.push('/login')
+  }
 
   const sidebarContent = (
     <aside className="w-64 bg-[#0A2540] text-white h-full flex flex-col">
@@ -64,7 +72,7 @@ export function DashboardSidebar({ isOpen, onClose }: Readonly<DashboardSidebarP
 
       {/* Footer */}
       <div className="p-4 border-t border-[#6B7280] space-y-2 mb-3">
-        <button className="text-sm w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white transition-all text-left">
+        <button onClick={handleLogout} className="text-sm w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white transition-all text-left">
           <LogOut className="w-5 h-5" />
           <span>Log out</span>
         </button>

@@ -1,9 +1,11 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { DashboardSidebar } from '@/components/dashboard/sidebar'
+import { DashboardSidebar } from '@/components/customer-dashboard/sidebar'
 import { Button } from '@/components/ui/button'
 import { Settings, Menu } from 'lucide-react'
+import { useAuth } from '@/lib/context/auth-context'
+import { useRouter } from 'next/navigation'
 
 export default function DashboardLayout({
   children,
@@ -11,16 +13,29 @@ export default function DashboardLayout({
   children: React.ReactNode
 }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [user, setUser] = useState({
-    name: 'Kunle Remi',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  })
+  const { isAuthenticated, isLoading, user } = useAuth()
+  const router = useRouter()
+
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
+    if (!isLoading && !isAuthenticated) {
+      router.push('/sign-in')
     }
-  }, [])
+  }, [isAuthenticated, isLoading, router])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return null
+  }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -57,8 +72,8 @@ export default function DashboardLayout({
               <Settings className="w-6 h-6" />
             </Button>
             <div className="flex items-center gap-3 px-4 py-2 rounded-lg sm:border border-0 border-[#6B7280]">
-              <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-              <span className="font-medium text-[#6B7280] hidden sm:inline">{user.name}</span>
+              <img src={user?.avatar|| "/placeholder.svg"} alt={user?.firstName} className="w-8 h-8 rounded-full" />
+              <span className="font-medium text-[#6B7280] hidden sm:inline">{user?.firstName} {user?.lastName}</span>
             </div>
           </div>
         </header>

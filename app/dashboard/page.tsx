@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { Card } from '@/components/ui/card'
-import { ShipmentCard } from '@/components/dashboard/shipment-card'
-import { ActivityTimeline } from '@/components/dashboard/activity-timeline'
+import { ShipmentCard } from '@/components/customer-dashboard/shipment-card'
+import { ActivityTimeline } from '@/components/customer-dashboard/activity-timeline'
 import { FileText, Truck } from 'lucide-react'
 
 export default function DashboardPage() {

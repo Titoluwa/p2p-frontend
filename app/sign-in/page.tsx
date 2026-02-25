@@ -6,24 +6,49 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useAuth } from '@/lib/context/auth-context'
+import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     })
+    const [isLoading, setIsLoading] = useState(false)
+    const [frontError, setFrontError] = useState<string | null>(null)
+    const { login, error } = useAuth()
+    const displayError = frontError || error
+    const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({
-        ...prev,
-        [name]: value,
+            ...prev,
+            [name]: value,
         }))
+        if (frontError) setFrontError(null)
     }
 
-    const handleSubmit = (e: React.SubmitEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('Login data:', formData)
+        setIsLoading(true)
+        setFrontError(null)
+
+        try {
+            await login({
+                email: formData.email,
+                password: formData.password,
+            })
+            router.push('/dashboard')
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setFrontError(err.message)
+            } else {
+                setFrontError('Something went wrong. Please try again.')
+            }
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -32,6 +57,7 @@ export default function SignInPage() {
                 
                 <div className="overflow-hidden grid md:grid-cols-2 gap-10">
                     {/* Left Column - Form */}
+                    <form onSubmit={handleSubmit}>
                     <div className="px-4 sm:px-6 lg:px-12 flex flex-col justify-around">
                         <div className="mb-10">
                             {/* Logo Placeholder */}
@@ -71,7 +97,7 @@ export default function SignInPage() {
                             </div>
 
                             {/* Form */}
-                            <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
+                            <div className="flex flex-col space-y-5">
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                                         Email address
@@ -90,14 +116,22 @@ export default function SignInPage() {
                                         </Link>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
 
+
+                        {displayError && (
+                            <div className="mb-4 rounded-md border border-red-300 bg-red-50 p-3">
+                                <p className="text-sm text-red-600 font-medium">
+                                    {displayError}
+                                </p>
+                            </div>
+                        )}
                         <div>
-                            <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white text-base font-semibold py-6">
-                                Login
+                            <Button type="submit" disabled={isLoading} className="w-full bg-primary hover:bg-primary-dark text-white text-base font-semibold py-6">
+                                {isLoading ? 'Logging in...' : 'Log in'}
                             </Button>
-                            <p className="text-sm text-gray-600 mt-2">
+                            <p className="text-sm text-gray-600 mt-3">
                                 Don't have an account?{' '}
                                 <Link href="/sign-up" className="text-primary font-semibold hover:underline">
                                     Sign up
@@ -105,6 +139,7 @@ export default function SignInPage() {
                             </p>
                         </div>
                     </div>
+                    </form>
 
                     {/* Right Column - Image */}
                     <div className="hidden md:block relative h-[90vh] overflow-hidden">
