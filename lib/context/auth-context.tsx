@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { authService } from '@/lib/api/auth'
-import { AuthUser, LoginRequest, RegisterRequest, LoginResponse } from '@/lib/types/api'
+import { AuthUser, LoginRequest, RegisterRequest, LoginResponse, VerifyAccountResponse } from '@/lib/types/api'
 
 interface AuthContextType {
   user: AuthUser | null
@@ -12,6 +12,7 @@ interface AuthContextType {
   register: (data: RegisterRequest) => Promise<LoginResponse>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
+  verifyAccount: (token: string) => Promise<VerifyAccountResponse>
   error: string | null
   clearError: () => void
 }
@@ -92,6 +93,17 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
       authService.logout_sync()
     }
   }
+  const verifyAccount = async (token: string) => {
+    try {
+      setError(null)
+      const response = await authService.verifyAccount(token)
+      return response
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Verification failed'
+      setError(errorMessage)
+      throw err
+    }
+  }
 
   const clearError = () => setError(null)
 
@@ -99,6 +111,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     user,
     isLoading,
     isAuthenticated: !!user,
+    verifyAccount,
     login,
     register,
     logout,

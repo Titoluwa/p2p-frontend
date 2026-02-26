@@ -159,6 +159,21 @@ export const authService = {
         }
     },
 
+    async verifyAccount(token: string): Promise<any> {
+        try {
+            const response = await apiClient.patch(
+                `/auth/verify-email/${token}`,
+            )
+            console.log(response)
+            return response
+        } catch (error) {
+            if (error instanceof ApiError) {
+                throw new Error(error.message)
+            }
+            throw error
+        }
+    },
+
     getToken(): string | null {
         return authApi.getToken()
     },

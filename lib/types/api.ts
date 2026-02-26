@@ -17,6 +17,8 @@ export interface RegisterRequest {
     lastName: string
     email: string
     password: string
+    isAgreedToTermsAndConditions: boolean
+    isSubscribedToNewsletter: boolean
 }
 
 export interface LoginResponse {
@@ -31,6 +33,11 @@ export interface LoginResponse {
         role: string
         status: string
     }
+}
+
+export interface VerifyAccountResponse {
+    success: boolean
+    message: string
 }
 
 export interface AuthUser {

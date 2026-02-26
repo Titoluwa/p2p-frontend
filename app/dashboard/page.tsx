@@ -5,8 +5,10 @@ import { Card } from '@/components/ui/card'
 import { ShipmentCard } from '@/components/customer-dashboard/shipment-card'
 import { ActivityTimeline } from '@/components/customer-dashboard/activity-timeline'
 import { FileText, Truck } from 'lucide-react'
+import { useAuth } from '@/lib/context/auth-context'
 
 export default function DashboardPage() {
+  const { user } = useAuth()
   const shipments = [
     {
       title: 'BMW 3 Series',
@@ -35,7 +37,7 @@ export default function DashboardPage() {
     <div className="space-y-6 lg:space-y-8">
       {/* Welcome Section */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Welcome back, Kunle</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Welcome back, {user?.firstName}</h1>
         <p className="text-gray-600 text-sm sm:text-base">Here's what's happening with your shipments</p>
       </div>
 

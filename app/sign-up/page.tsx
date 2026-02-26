@@ -16,8 +16,8 @@ export default function SignUpPage() {
         lastName: '',
         email: '',
         password: '',
-        agreeTerms: false,
-        subscribeNewsletter: false,
+        isAgreedToTermsAndConditions: false,
+        isSubscribedToNewsletter: false,
     })
     const [isLoading, setIsLoading] = useState(false)
     const [frontError, setFrontError] = useState<string | null>(null)
@@ -38,7 +38,7 @@ export default function SignUpPage() {
         e.preventDefault()
         setFrontError(null)
 
-        if (!formData.agreeTerms) {
+        if (!formData.isAgreedToTermsAndConditions) {
             setFrontError('Please agree to the Terms and Privacy Policy')
             return
         }
@@ -147,8 +147,8 @@ export default function SignUpPage() {
 
                             <div className="space-y-3">
                                 <div className="flex items-start gap-2">
-                                    <Checkbox id="terms" name="agreeTerms"className="mt-0.5" checked={formData.agreeTerms} 
-                                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, agreeTerms: !!checked }))}
+                                    <Checkbox id="terms" name="isAgreedToTermsAndConditions"className="mt-0.5" checked={formData.isAgreedToTermsAndConditions} 
+                                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isAgreedToTermsAndConditions: !!checked }))}
                                     />
                                     <label htmlFor="terms" className="text-sm text-gray-600 font-semibold leading-snug">
                                         I agree to the{' '}
@@ -159,8 +159,8 @@ export default function SignUpPage() {
                                 </div>
 
                                 <div className="flex items-start gap-2 pb-10">
-                                    <Checkbox id="newsletter" className="mt-0.5" name="subscribeNewsletter" checked={formData.subscribeNewsletter}
-                                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, subscribeNewsletter: !!checked }))} 
+                                    <Checkbox id="newsletter" className="mt-0.5" name="isSubscribedToNewsletter" checked={formData.isSubscribedToNewsletter}
+                                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isSubscribedToNewsletter: !!checked }))} 
                                     />
                                     <label htmlFor="newsletter" className="text-sm text-gray-600 font-semibold leading-snug">
                                         Subscribe to our newsletter
