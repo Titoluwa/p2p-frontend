@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { authService } from '@/lib/api/auth'
 import { AuthUser, LoginRequest, RegisterRequest, LoginResponse, VerifyAccountResponse } from '@/lib/types/api'
 
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     try {
       setError(null)
       const response = await authService.login(credentials)
-      setUser(response.user)
+      setUser(response.data.user)
       return response
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Login failed'
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     try {
       setError(null)
       const response = await authService.register(data)
-      setUser(response.user)
+      setUser(response.data.user)
       return response
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Registration failed'
@@ -107,7 +107,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
   const clearError = () => setError(null)
 
-  const value: AuthContextType = {
+  const value = useMemo<AuthContextType>(() => ({
     user,
     isLoading,
     isAuthenticated: !!user,
@@ -118,7 +118,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     refreshUser,
     error,
     clearError,
-  }
+  }), [user, isLoading, error, verifyAccount, login, register, logout, refreshUser, clearError])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

@@ -51,6 +51,8 @@ export default function SignUpPage() {
                 lastName: formData.lastName,
                 email: formData.email,
                 password: formData.password,
+                isSubscribedToNewsletter: formData.isSubscribedToNewsletter,
+                isAgreedToTermsAndConditions: formData.isAgreedToTermsAndConditions,
             })
             router.push('/dashboard')
         } catch (err: unknown) {

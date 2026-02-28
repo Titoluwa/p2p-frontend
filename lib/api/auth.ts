@@ -16,12 +16,12 @@ export const authService = {
                 credentials
             )
 
-            if (response.token) {
-                authApi.setToken(response.token)
+            if (response.data.token) {
+                authApi.setToken(response.data.token)
             }
 
-            if (response.refreshToken) {
-                authApi.setRefreshToken(response.refreshToken)
+            if (response.data.refreshToken) {
+                authApi.setRefreshToken(response.data.refreshToken)
             }
 
             return response
@@ -40,12 +40,12 @@ export const authService = {
                 data
             )
 
-            if (response.token) {
-                authApi.setToken(response.token)
+            if (response.data.token) {
+                authApi.setToken(response.data.token)
             }
 
-            if (response.refreshToken) {
-                authApi.setRefreshToken(response.refreshToken)
+            if (response.data.refreshToken) {
+                authApi.setRefreshToken(response.data.refreshToken)
             }
 
             return response
@@ -70,8 +70,8 @@ export const authService = {
                 { refreshToken }
             )
 
-            if (response.token) {
-                authApi.setToken(response.token)
+            if (response.data.token) {
+                authApi.setToken(response.data.token)
             }
 
             return response
@@ -146,8 +146,8 @@ export const authService = {
                 { token }
             )
 
-            if (response.token) {
-                authApi.setToken(response.token)
+            if (response.data.token) {
+                authApi.setToken(response.data.token)
             }
 
             return response
@@ -164,7 +164,6 @@ export const authService = {
             const response = await apiClient.patch(
                 `/auth/verify-email/${token}`,
             )
-            console.log(response)
             return response
         } catch (error) {
             if (error instanceof ApiError) {

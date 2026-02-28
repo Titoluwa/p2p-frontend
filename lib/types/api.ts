@@ -22,16 +22,20 @@ export interface RegisterRequest {
 }
 
 export interface LoginResponse {
-    token: string
-    refreshToken?: string
-    user: {
-        id: string
-        email: string
-        firstName: string
-        lastName: string
-        fullName: string
-        role: string
-        status: string
+    success: boolean
+    message: string
+    data: {
+        token: string
+        refreshToken?: string
+        user: {
+            id: string
+            email: string
+            firstName: string
+            lastName: string
+            fullName: string
+            role: string
+            status: string
+        }
     }
 }
 
@@ -52,7 +56,11 @@ export interface AuthUser {
 }
 
 export interface RefreshTokenResponse {
-    token: string
+    success: boolean
+    message: string
+    data: {
+        token: string
+    }
 }
 
 // Shipment Types

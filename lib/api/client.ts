@@ -63,7 +63,7 @@ async function request<T>( endpoint: string, options: RequestOptions = {} ): Pro
         throw new ApiError(response.status, errorMessage, data)
     }
 
-    return data.data as T
+    return data as T
 }
 
 // Public API client (no auth required)
