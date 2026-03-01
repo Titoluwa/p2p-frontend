@@ -21,13 +21,13 @@ export function Header() {
   // const router = useRouter()
   // const activeRoute = router.
   // console.log(activeRoute)
-  
+
   return (
     <header className="bg-[#F8FAFC]">
       <div className="max-w-[1440px] mx-auto px-2 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="p-3 px-10 bg-[#D9D9D9] flex items-center justify-center">
-            <span className="hidden sm:inline font-bold text-gray-900">Port2Port</span>
+            <span className="hidden sm:inline font-bold text-[#111827]">Port2Port</span>
           </div>
         </Link>
 

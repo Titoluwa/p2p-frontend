@@ -74,7 +74,7 @@ export default function Routes() {
             className="object-cover"
           />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Shipping Routes</h1>
           <p className="text-lg text-gray-100">
@@ -101,7 +101,7 @@ export default function Routes() {
             {ports.map((port, i) => (
               <Card key={i} className="p-6 text-center hover:shadow-lg transition-shadow border border-primary border-opacity-30">
                 <div className="text-4xl mb-4">{port.icon}</div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">{port.name}</h3>
+                <h3 className="font-semibold text-lg text-[#111827] mb-2">{port.name}</h3>
                 <p className="text-sm text-gray-600">{port.description}</p>
               </Card>
             ))}
@@ -145,7 +145,7 @@ export default function Routes() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-900">
+            <div className="relative h-96 rounded-lg overflow-hidden bg-[#111827]">
               <Image
                 src="/placeholder.svg"
                 alt="Port operations"
@@ -158,22 +158,22 @@ export default function Routes() {
                 <span className="text-2xl">📍</span>
                 <span className="text-sm font-semibold text-primary">Help</span>
               </div>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Popular Shipping Routes</h2>
+              <h2 className="text-3xl font-bold mb-6 text-[#111827]">Popular Shipping Routes</h2>
               <p className="text-gray-600 mb-6">
                 Our most frequently used routes with regular sailings
               </p>
               <div className="space-y-3 mb-8">
                 {routes.map((route, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-primary hover:bg-blue-50 transition-all">
+                  <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-primary hover:bg-[#2563EB]/10 transition-all">
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{route.icon}</span>
                       <div>
-                        <h3 className="font-semibold text-gray-900">{route.route}</h3>
+                        <h3 className="font-semibold text-[#111827]">{route.route}</h3>
                         <p className="text-xs text-gray-500">Monthly sailings</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-gray-900">{route.days}</p>
+                      <p className="text-sm font-semibold text-[#111827]">{route.days}</p>
                     </div>
                   </div>
                 ))}
@@ -196,7 +196,7 @@ export default function Routes() {
               <div className="flex items-center gap-2 mb-4 bg-white bg-opacity-30 w-fit px-3 py-1 rounded-full">
                 <span className="text-sm font-semibold">📦 Get a Quote</span>
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Ship Your Vehicle?</h2>
+              <h2 className="text-3xl font-bold mb-4 text-[#111827]">Ready to Ship Your Vehicle?</h2>
               <p className="text-gray-800 mb-6">
                 Get a personalized logistics solution tailored to your business needs. Fast, transparent, and built to scale.
               </p>

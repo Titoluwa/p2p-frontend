@@ -99,7 +99,7 @@ export default function VerifyPage() {
                             {/* Logo Placeholder */}
                             <div className="w-24 h-10 bg-gray-300 mb-3" />
 
-                            <h1 className="text-[42px] font-[300] text-gray-900 mb-3">
+                            <h1 className="text-[42px] font-[300] text-[#111827] mb-3">
                                 {headingText}
                             </h1>
 

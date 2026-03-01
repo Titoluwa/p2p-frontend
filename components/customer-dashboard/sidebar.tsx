@@ -6,11 +6,11 @@ import { LayoutGrid, Ship, FileText, CreditCard, LogOut, X } from 'lucide-react'
 import { useAuth } from '@/lib/context/auth-context'
 
 const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
-  { label: 'My Shipments', href: '/dashboard/shipments', icon: Ship },
-  { label: 'Request a Quote', href: '/dashboard/quote', icon: FileText },
-  { label: 'Payments', href: '/dashboard/payments', icon: CreditCard },
-  { label: 'Documents', href: '/dashboard/documents', icon: FileText },
+  { label: 'Dashboard', href: '/user/dashboard', icon: LayoutGrid },
+  { label: 'My Shipments', href: '/user/shipments', icon: Ship },
+  { label: 'Request a Quote', href: '/user/quote', icon: FileText },
+  { label: 'Payments', href: '/user/payments', icon: CreditCard },
+  { label: 'Documents', href: '/user/documents', icon: FileText },
 ]
 
 interface DashboardSidebarProps {

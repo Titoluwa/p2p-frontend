@@ -43,7 +43,7 @@ export default function TrackShipment() {
             className="object-cover"
           />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Track Your Shipment</h1>
           <p className="text-lg text-gray-100">
@@ -80,7 +80,7 @@ export default function TrackShipment() {
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4">
           <Card className="p-8 mb-12">
-            <h2 className="text-2xl font-bold mb-6 text-gray-900">Tracking Number</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#111827]">Tracking Number</h2>
             <p className="text-gray-600 mb-4">
               You can find your tracking number in your booking confirmation email
             </p>
@@ -100,35 +100,35 @@ export default function TrackShipment() {
 
           {/* Shipment Info */}
           <div className="mb-12 space-y-6">
-            <Card className="p-6 bg-blue-50 border border-primary">
+            <Card className="p-6 bg-[#2563EB]/10 border border-primary">
               <Badge className="mb-4 bg-primary text-white">In Transit</Badge>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600">Tracking ID</h3>
-                  <p className="text-lg font-bold text-gray-900 mt-1">{shipmentDetails.trackingId}</p>
+                  <p className="text-lg font-bold text-[#111827] mt-1">{shipmentDetails.trackingId}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600">Origin</h3>
-                  <p className="text-lg font-bold text-gray-900 mt-1">{shipmentDetails.origin}</p>
+                  <p className="text-lg font-bold text-[#111827] mt-1">{shipmentDetails.origin}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600">Destination</h3>
-                  <p className="text-lg font-bold text-gray-900 mt-1">{shipmentDetails.destination}</p>
+                  <p className="text-lg font-bold text-[#111827] mt-1">{shipmentDetails.destination}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600">Departure</h3>
-                  <p className="text-lg font-bold text-gray-900 mt-1">{shipmentDetails.departureDate}</p>
+                  <p className="text-lg font-bold text-[#111827] mt-1">{shipmentDetails.departureDate}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600">Est. Arrival</h3>
-                  <p className="text-lg font-bold text-gray-900 mt-1">{shipmentDetails.estimatedArrival}</p>
+                  <p className="text-lg font-bold text-[#111827] mt-1">{shipmentDetails.estimatedArrival}</p>
                 </div>
               </div>
             </Card>
 
             {/* Timeline */}
             <Card className="p-6">
-              <h3 className="text-xl font-bold mb-8 text-gray-900">Shipment Status</h3>
+              <h3 className="text-xl font-bold mb-8 text-[#111827]">Shipment Status</h3>
               <div className="space-y-6">
                 {shipmentStatus.map((item, i) => (
                   <div key={i} className="flex gap-4">
@@ -143,7 +143,7 @@ export default function TrackShipment() {
                       )}
                     </div>
                     <div className="pb-4">
-                      <h4 className={`font-semibold ${item.completed ? 'text-gray-900' : 'text-gray-600'}`}>
+                      <h4 className={`font-semibold ${item.completed ? 'text-[#111827]' : 'text-gray-600'}`}>
                         {item.status}
                       </h4>
                       <p className="text-sm text-gray-500 mt-1">{item.date}</p>
@@ -165,7 +165,7 @@ export default function TrackShipment() {
               <div className="flex items-center gap-2 mb-4 bg-white bg-opacity-30 w-fit px-3 py-1 rounded-full">
                 <span className="text-sm font-semibold">📦 Get a Quote</span>
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Ship Your Vehicle?</h2>
+              <h2 className="text-3xl font-bold mb-4 text-[#111827]">Ready to Ship Your Vehicle?</h2>
               <p className="text-gray-800 mb-6">
                 Get a personalized logistics solution tailored to your business needs. Fast, transparent, and built to scale.
               </p>

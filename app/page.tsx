@@ -19,7 +19,7 @@ export default function Home() {
       description: 'Specialized in shipping personal and commercial vehicles with full tracking.',
       icon: '🚗',
     },
-    { 
+    {
       id: 2,
       title: 'Trucks & Motorhomes',
       description: 'Experience with oversized vehicles and special cargo handling.',
@@ -65,7 +65,7 @@ export default function Home() {
       role: 'Customer',
       image: '/placeholder.svg?height=48&width=48',
     },
-    { 
+    {
       id: 2,
       quote: 'Professional service with attention to detail. Highly recommended!',
       author: 'Michael Chen',
@@ -84,15 +84,15 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <Hero/>
-      <Partners/>
-      
-      <WhyChooseUs/>
+      <Hero />
+      <Partners />
+
+      <WhyChooseUs />
 
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative h-80 rounded-2xl overflow-hidden bg-gray-900">
+            <div className="relative h-80 rounded-2xl overflow-hidden bg-[#111827]">
               <Image
                 src="/placeholder.svg"
                 alt="Port operations"
@@ -115,7 +115,7 @@ export default function Home() {
                       {item.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
+                      <h3 className="font-semibold text-[#111827] mb-1">{item.title}</h3>
                       <p className="text-gray-600 text-sm">{item.description}</p>
                     </div>
                   </div>
@@ -144,7 +144,7 @@ export default function Home() {
             {services.map((service) => (
               <Card key={service.id} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900">{service.title}</h3>
+                <h3 className="font-semibold text-lg mb-2 text-[#111827]">{service.title}</h3>
                 <p className="text-gray-600 text-sm">{service.description}</p>
               </Card>
             ))}
@@ -162,7 +162,7 @@ export default function Home() {
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-primary flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">{testimonial.author}</h3>
+                    <h3 className="font-semibold text-[#111827]">{testimonial.author}</h3>
                     <p className="text-sm text-gray-600">{testimonial.role}</p>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4 bg-white bg-opacity-30 w-fit px-3 py-1 rounded-full">
                 <span className="text-sm font-semibold">📦 Get a Quote</span>
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Ship Your Vehicle?</h2>
+              <h2 className="text-3xl font-bold mb-4 text-[#111827]">Ready to Ship Your Vehicle?</h2>
               <p className="text-gray-800 mb-6">
                 Get a personalized logistics solution tailored to your business needs. Fast, transparent, and built to scale.
               </p>

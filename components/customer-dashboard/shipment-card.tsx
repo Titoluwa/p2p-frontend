@@ -13,7 +13,7 @@ interface ShipmentCardProps {
 const statusConfig = {
   'in-transit': {
     label: 'In Transit',
-    color: 'bg-blue-100 text-blue-800',
+    color: 'bg-[#2563EB]/20 text-blue-800',
   },
   'loaded': {
     label: 'Loaded on the vessel',
@@ -42,7 +42,7 @@ export function ShipmentCard({
     <Card className="p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-lg text-gray-900">{title}</h3>
+          <h3 className="font-semibold text-lg text-[#111827]">{title}</h3>
           <p className="text-sm text-gray-600 mt-1">{route}</p>
         </div>
         <Badge className={statusInfo.color}>
@@ -53,7 +53,7 @@ export function ShipmentCard({
       <div className="space-y-3 text-sm">
         <div>
           <p className="text-gray-500">Tracking:</p>
-          <p className="font-mono text-gray-900">{trackingId}</p>
+          <p className="font-mono text-[#111827]">{trackingId}</p>
         </div>
 
         <div className="flex items-center gap-2 text-gray-600">

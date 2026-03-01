@@ -14,7 +14,7 @@ const typeConfig = {
   },
   document: {
     icon: FileText,
-    color: 'bg-blue-100 text-blue-600',
+    color: 'bg-[#2563EB]/20 text-[#2563EB]',
   },
   package: {
     icon: Package,
@@ -49,7 +49,7 @@ export function ActivityTimeline({ activities }: Readonly<ActivityTimelineProps>
             </div>
 
             <div className="pt-2 pb-4">
-              <p className="font-medium text-gray-900">{activity.title}</p>
+              <p className="font-medium text-[#111827]">{activity.title}</p>
               <p className="text-sm text-gray-500 mt-1">{activity.date}</p>
             </div>
           </div>

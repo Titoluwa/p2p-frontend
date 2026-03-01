@@ -58,7 +58,7 @@ export default function HowItWorks() {
             className="object-cover"
           />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">How Port2Port Works</h1>
           <p className="text-lg text-gray-100">
@@ -105,7 +105,7 @@ export default function HowItWorks() {
                 <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 font-bold text-lg">
                   {step.number}
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <h3 className="font-semibold text-[#111827] mb-2">{step.title}</h3>
                 <p className="text-sm text-gray-600">{step.description}</p>
               </Card>
             ))}
@@ -124,7 +124,7 @@ export default function HowItWorks() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-900">
+            <div className="relative h-96 rounded-lg overflow-hidden bg-[#111827]">
               <Image
                 src="/placeholder.svg"
                 alt="Documents"
@@ -146,7 +146,7 @@ export default function HowItWorks() {
                   <div key={i} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200">
                     <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{doc.title}</h3>
+                      <h3 className="font-semibold text-[#111827]">{doc.title}</h3>
                       <p className="text-xs text-gray-500">{doc.status}</p>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export default function HowItWorks() {
                 </Button>
               </Link>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-900">
+            <div className="relative h-96 rounded-lg overflow-hidden bg-[#111827]">
               <Image
                 src="/placeholder.svg"
                 alt="Port operations"
@@ -198,12 +198,12 @@ export default function HowItWorks() {
             </div>
             <h2 className="text-3xl font-bold">Get answers to your questions</h2>
           </div>
-          
+
           <Accordion type="single" collapsible className="bg-white rounded-lg border border-gray-200">
             {faqs.map((faq, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-0">
                 <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-gray-50">
-                  <span className="text-left font-semibold text-gray-900">{faq.question}</span>
+                  <span className="text-left font-semibold text-[#111827]">{faq.question}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 py-4 text-gray-600">
                   {faq.answer}
@@ -222,7 +222,7 @@ export default function HowItWorks() {
               <div className="flex items-center gap-2 mb-4 bg-white bg-opacity-30 w-fit px-3 py-1 rounded-full">
                 <span className="text-sm font-semibold">📦 Get a Quote</span>
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Ship Your Vehicle?</h2>
+              <h2 className="text-3xl font-bold mb-4 text-[#111827]">Ready to Ship Your Vehicle?</h2>
               <p className="text-gray-800 mb-6">
                 Get a personalized logistics solution tailored to your business needs. Fast, transparent, and built to scale.
               </p>

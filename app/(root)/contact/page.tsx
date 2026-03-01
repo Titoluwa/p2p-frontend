@@ -6,7 +6,6 @@ import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Card } from '@/components/ui/card'
 
 export default function Contact() {
   return (
@@ -23,7 +22,7 @@ export default function Contact() {
             className="object-cover"
           />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-lg text-gray-100 max-w-2xl">
@@ -38,12 +37,12 @@ export default function Contact() {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Form Section */}
             <div>
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Get In Touch</h2>
+              <h2 className="text-2xl font-bold mb-6 text-[#111827]">Get In Touch</h2>
               <form className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Full name</label>
-                  <Input 
-                    type="text" 
+                  <Input
+                    type="text"
                     placeholder="John Doe"
                     className="w-full border border-gray-300"
                   />
@@ -51,8 +50,8 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Email address</label>
-                  <Input 
-                    type="email" 
+                  <Input
+                    type="email"
                     placeholder="john.herman@gmail.com"
                     className="w-full border border-gray-300"
                   />
@@ -60,8 +59,8 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                  <Input 
-                    type="text" 
+                  <Input
+                    type="text"
                     placeholder="e.g. Payment error"
                     className="w-full border border-gray-300"
                   />
@@ -69,7 +68,7 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <Textarea 
+                  <Textarea
                     placeholder="Your message here..."
                     className="w-full border border-gray-300 min-h-32"
                   />
@@ -84,7 +83,7 @@ export default function Contact() {
             {/* Images Section */}
             <div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative h-40 rounded-lg overflow-hidden bg-gray-900 col-span-1">
+                <div className="relative h-40 rounded-lg overflow-hidden bg-[#111827] col-span-1">
                   <Image
                     src="/placeholder.svg"
                     alt="Vehicle 1"
@@ -92,7 +91,7 @@ export default function Contact() {
                     className="object-cover"
                   />
                 </div>
-                <div className="relative h-40 rounded-lg overflow-hidden bg-gray-900 col-span-1">
+                <div className="relative h-40 rounded-lg overflow-hidden bg-[#111827] col-span-1">
                   <Image
                     src="/placeholder.svg"
                     alt="Vehicle 2"
@@ -100,7 +99,7 @@ export default function Contact() {
                     className="object-cover"
                   />
                 </div>
-                <div className="relative h-40 rounded-lg overflow-hidden bg-gray-900 col-span-2">
+                <div className="relative h-40 rounded-lg overflow-hidden bg-[#111827] col-span-2">
                   <Image
                     src="/placeholder.svg"
                     alt="Port operations"

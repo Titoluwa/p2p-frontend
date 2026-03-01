@@ -33,6 +33,7 @@ export interface LoginResponse {
             firstName: string
             lastName: string
             fullName: string
+            phone: string
             role: string
             status: string
         }
@@ -50,6 +51,7 @@ export interface AuthUser {
     firstName: string
     lastName: string
     fullName: string
+    phone: string
     role: string
     status: string
     avatar?: string

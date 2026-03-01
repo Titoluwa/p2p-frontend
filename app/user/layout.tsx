@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button'
 import { Settings, Menu } from 'lucide-react'
 import { useAuth } from '@/lib/context/auth-context'
 import { useRouter } from 'next/navigation'
+import Link from "next/link"
 
-export default function DashboardLayout({
+export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -65,14 +66,16 @@ export default function DashboardLayout({
           <div className="hidden md:block" />
 
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              className="text-[#6B7280] hover:bg-gray-100 sm:border border-0 border-[#6B7280] h-[48px] w-[48px] p-0"
-            >
-              <Settings className="w-6 h-6" />
-            </Button>
+            <Link href="/user/account-settings">
+              <Button
+                variant="ghost"
+                className="text-[#6B7280] hover:bg-gray-100 sm:border border-0 border-[#6B7280] h-[48px] w-[48px] p-0"
+              >
+                <Settings className="w-6 h-6" />
+              </Button>
+            </Link>
             <div className="flex items-center gap-3 px-4 py-2 rounded-lg sm:border border-0 border-[#6B7280]">
-              <img src={user?.avatar|| "/placeholder.svg"} alt={user?.firstName} className="w-8 h-8 rounded-full" />
+              <img src={user?.avatar || "/placeholder.svg"} alt={user?.firstName} className="w-8 h-8 rounded-full" />
               <span className="font-medium text-[#6B7280] hidden sm:inline">{user?.firstName} {user?.lastName}</span>
             </div>
           </div>

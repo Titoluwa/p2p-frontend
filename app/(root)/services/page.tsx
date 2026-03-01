@@ -68,7 +68,7 @@ export default function Services() {
             className="object-cover"
           />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Our Shipping Services</h1>
           <p className="text-lg text-gray-100 max-w-2xl">
@@ -100,7 +100,7 @@ export default function Services() {
           <div className="space-y-16">
             {services.map((service, i) => (
               <div key={i} className={`grid md:grid-cols-2 gap-8 items-center ${i % 2 === 1 ? 'md:grid-cols-2 md:[&>*:first-child]:order-2' : ''}`}>
-                <div className="relative h-80 rounded-lg overflow-hidden bg-gray-900">
+                <div className="relative h-80 rounded-lg overflow-hidden bg-[#111827]">
                   <Image
                     src={service.image || "/placeholder.svg"}
                     alt={service.title}
@@ -113,7 +113,7 @@ export default function Services() {
                     <span className="text-2xl">{service.icon}</span>
                     <span className="text-sm font-semibold text-primary">{service.category}</span>
                   </div>
-                  <h2 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h2>
+                  <h2 className="text-2xl font-bold mb-4 text-[#111827]">{service.title}</h2>
                   <p className="text-gray-600 mb-6">{service.description}</p>
                   <Link href="/contact">
                     <Button className="bg-primary hover:bg-primary-dark text-white">
@@ -132,7 +132,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Ship Your Vehicle?</h2>
+              <h2 className="text-3xl font-bold mb-4 text-[#111827]">Ready to Ship Your Vehicle?</h2>
               <p className="text-gray-800 mb-6">
                 Get a personalized logistics solution tailored to your business needs. Fast, transparent, and built to scale.
               </p>
