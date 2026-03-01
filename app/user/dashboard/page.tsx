@@ -49,7 +49,7 @@ export default function DashboardPage({ hasActivity = false }: Readonly<{ hasAct
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-        <Link href="/user/quote">
+        <Link href="/user/quotes">
           <Card className="p-4 sm:p-6 bg-[#111827] text-white hover:shadow-lg transition-shadow cursor-pointer border-[#6B7280] text-center">
             <div className="flex flex-col items-center justify-center space-y-4">
               <FileText className="w-10 h-10" />
