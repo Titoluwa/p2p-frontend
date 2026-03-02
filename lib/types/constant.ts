@@ -57,3 +57,28 @@ export interface Document {
     type: string
     status: "Approved" | "Pending" | "Rejected"
 }
+
+export type DocumentStatus = "Approved" | "Pending" | "Rejected"
+
+export interface MainDocument {
+    filename: string
+    type: string
+    shipment: string
+    uploadDate: string
+    status: DocumentStatus
+}
+
+export const DOC_FILTER_OPTIONS = ["All", "Approved", "Pending", "Rejected"]
+
+
+export type PaymentStatus = "Completed" | "Pending" | "Failed"
+
+export interface Payment {
+    paymentId: string
+    shipmentId: string
+    date: string
+    amount: string
+    status: PaymentStatus
+}
+
+export const PAYMENT_FILTER_OPTIONS = ["All", "Completed", "Pending", "Failed"]

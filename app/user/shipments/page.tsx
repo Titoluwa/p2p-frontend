@@ -5,10 +5,12 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
-import { Shipment, TabFilter } from "@/lib/types/constant"
+import { FILTER_OPTIONS, Shipment, TabFilter } from "@/lib/types/constant"
 import { Pagination } from "@/components/user-shipment/pagination"
 import { ActiveIcon, CompletedIcon, FailedIcon, PendingIcon, StatCard, StatusBadge } from "@/components/user-shipment/status-icon"
-import { FilterDropdown, EmptyState, TabBar } from "@/components/user-shipment/bars"
+import { TabBar } from "@/components/user-shipment/bars"
+import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
+import { EmptyState } from "@/components/customer-dashboard/empty-state"
 
 // ── Mock Data
 
@@ -108,7 +110,7 @@ export default function MyShipmentsPage({ onViewDetails, onRequestQuote, isEmpty
 
             {/* Content */}
             {isEmpty ? (
-                <EmptyState />
+                <EmptyState emptyText="No Shipment Found" />
             ) : (
                 <Card>
                     <CardContent className="p-5 sm:p-6">
@@ -125,7 +127,7 @@ export default function MyShipmentsPage({ onViewDetails, onRequestQuote, isEmpty
                                     className="pl-9"
                                 />
                             </div>
-                            <FilterDropdown value={filter} onChange={setFilter} />
+                            <FilterDropdown options={FILTER_OPTIONS} value={filter} onChange={setFilter} />
                         </div>
 
                         {/* Table */}
