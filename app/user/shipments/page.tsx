@@ -11,6 +11,7 @@ import { ActiveIcon, CompletedIcon, FailedIcon, PendingIcon, StatCard, StatusBad
 import { TabBar } from "@/components/user-shipment/bars"
 import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
 import { EmptyState } from "@/components/customer-dashboard/empty-state"
+import Link from "next/link"
 
 // ── Mock Data
 
@@ -89,12 +90,11 @@ export default function MyShipmentsPage({ onViewDetails, onRequestQuote, isEmpty
                         Manage and track all your vehicle shipments
                     </p>
                 </div>
-                <Button
-                    className="bg-[#2563EB] hover:bg-[#2563EB]/80 text-white shrink-0"
-                    onClick={onRequestQuote}
-                >
-                    Request a Quote
-                </Button>
+                <Link href="/user/quotes">
+                    <Button className="bg-[#2563EB] hover:bg-[#2563EB]/80 text-white shrink-0">
+                        Request a Quote
+                    </Button>
+                </Link>
             </div>
 
             {/* Stat Cards */}

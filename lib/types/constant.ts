@@ -82,3 +82,46 @@ export interface Payment {
 }
 
 export const PAYMENT_FILTER_OPTIONS = ["All", "Completed", "Pending", "Failed"]
+
+
+export interface CustomerInfo {
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+}
+
+export interface VehicleInfo {
+    vehicleType: string
+    vin: string
+    make: string
+    model: string
+    year: string
+    condition: "Running" | "Non-Running" | ""
+}
+
+export interface RouteInfo {
+    originCountry: string
+    destinationCountry: string
+    shippingDate: Date | undefined
+}
+
+export const VEHICLE_TYPES = [
+    "Cars & SUVs",
+    "Vans",
+    "Trucks & Motorhomes",
+    "Trailers",
+    "Wheeled Equipment (Agricultural Equipment)",
+]
+
+export const COUNTRIES = [
+    "Nigeria",
+    "Ghana",
+    "United Arab Emirates",
+    "Jamaica",
+    "Kenya",
+    "South Africa",
+    "United States",
+]
+
+export const ORIGIN_COUNTRIES = ["United Kingdom"]
