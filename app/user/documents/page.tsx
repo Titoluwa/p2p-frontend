@@ -62,7 +62,7 @@ interface DocumentsPageProps {
     onUpload?: () => void
 }
 
-export default function DocumentsPage({ isEmpty = false, onUpload }: Readonly<DocumentsPageProps>) {
+export default function DocumentsPage({ isEmpty = true, onUpload }: Readonly<DocumentsPageProps>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 

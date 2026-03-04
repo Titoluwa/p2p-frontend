@@ -19,34 +19,50 @@ export function Step4Review({ customer, vehicle, route }: Readonly<{ customer: C
                 <CardDescription>Please review your details before submitting</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+
+                {/* Customer */}
                 <div>
                 <h3 className="text-base font-bold text-[#111827] mb-4">Customer Information</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                    <ReviewField label="Name" value={`${customer.firstName} ${customer.lastName}`} />
+                    <ReviewField label="Full Name" value={`${customer.firstName} ${customer.lastName}`.trim()} />
                     <ReviewField label="Email Address" value={customer.email} />
                     <ReviewField label="Phone Number" value={customer.phone} />
                 </div>
                 </div>
+
+                {/* Vehicle */}
                 <div>
                 <h3 className="text-base font-bold text-[#111827] mb-4">Vehicle Information</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                    <ReviewField label="Type" value={vehicle.vehicleType || vehicle.make} />
-                    <ReviewField label="Make & Model" value={`${vehicle.make} ${vehicle.model}`} />
+                    <ReviewField label="Type" value={vehicle.vehicleType} />
+                    <ReviewField label="Make & Model" value={`${vehicle.make} ${vehicle.model}`.trim()} />
                     <ReviewField label="Year" value={vehicle.year} />
                     <ReviewField label="Condition" value={vehicle.condition} />
                     <ReviewField label="VIN" value={vehicle.vin} />
+                    <ReviewField
+                    label="Dimensions (cm)"
+                    value={vehicle.length && vehicle.width && vehicle.height
+                        ? `${vehicle.length} L × ${vehicle.width} W × ${vehicle.height} H`
+                        : '—'}
+                    />
+                    <ReviewField label="Weight (kg)" value={vehicle.weight} />
                 </div>
                 </div>
+
+                {/* Route */}
                 <div>
                 <h3 className="text-base font-bold text-[#111827] mb-4">Route Information</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                    <ReviewField label="Origin" value={route.originCountry} />
-                    <ReviewField label="Destination" value={route.destinationCountry} />
+                    <ReviewField label="Origin Country" value={route.originCountry} />
+                    <ReviewField label="Origin Port" value={route.originPort} />
+                    <ReviewField label="Destination Country" value={route.destinationCountry} />
+                    <ReviewField label="Destination Port" value={route.destinationPort} />
                     {route.shippingDate && (
                     <ReviewField label="Preferred Shipping Date" value={format(route.shippingDate, 'dd/MM/yyyy')} />
                     )}
                 </div>
                 </div>
+
             </CardContent>
         </Card>
     )

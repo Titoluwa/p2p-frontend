@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react"
 import { ShipmentDetail, ProgressStep, Document } from "@/lib/types/constant"
 import { ShipmentOverview, ShipmentProgress } from "@/components/user-shipment/shipment"
 import { Documents } from "@/components/user-shipment/documents"
+import { useParams, useRouter } from "next/navigation"
 
 // ── Mock Data
 
@@ -45,13 +46,21 @@ const MOCK_DOCUMENTS: Document[] = [
 
 interface ShipmentDetailsPageProps {
     shipmentId?: string
-    onBack?: () => void
 }
 
 export default function ShipmentDetailsPage({
     shipmentId = "SHP-2026-001",
-    onBack,
 }: ShipmentDetailsPageProps) {
+
+    const router = useRouter()
+    function onBack() {
+        router.back()
+    }
+
+    const { id } = useParams()
+    // console.log(id)
+    const resolvedId = (Array.isArray(id) ? id[0] : id) ?? shipmentId
+
     return (
         <div className="space-y-6 lg:space-y-8">
             {/* Header */}
@@ -64,7 +73,7 @@ export default function ShipmentDetailsPage({
                 </button>
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-[#111827]">Shipment Details</h1>
-                    <p className="text-gray-500 text-sm">{shipmentId}</p>
+                    <p className="text-gray-500 text-sm">{resolvedId}</p>
                 </div>
             </div>
 

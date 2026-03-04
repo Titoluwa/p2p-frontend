@@ -8,6 +8,7 @@ import { Search, Download } from "lucide-react"
 import { Payment, PAYMENT_FILTER_OPTIONS } from "@/lib/types/constant"
 import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
 import { PaymentStatusBadge, PaymentStatCard, TotalCostIcon, AmountPaidIcon, OutstandingIcon, Pagination } from "@/components/customer-dashboard/payment/status"
+import { EmptyState } from "@/components/customer-dashboard/empty-state"
 
 // ── Mock Data
 
@@ -21,13 +22,14 @@ const MOCK_PAYMENTS: Payment[] = [
 
 interface PaymentsPageProps {
     onMakePayment?: () => void
+    isEmpty?: boolean
 }
 
-export default function PaymentsPage({ onMakePayment }: Readonly<PaymentsPageProps>) {
+export default function PaymentsPage({ onMakePayment, isEmpty = true }: Readonly<PaymentsPageProps>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 
-    const filtered = MOCK_PAYMENTS.filter(p => {
+    const filtered = isEmpty ? [] : MOCK_PAYMENTS.filter(p => {
         const matchesSearch =
             !search ||
             p.paymentId.toLowerCase().includes(search.toLowerCase()) ||
@@ -60,23 +62,26 @@ export default function PaymentsPage({ onMakePayment }: Readonly<PaymentsPagePro
             {/* Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <PaymentStatCard
-                    amount="£4,150.00"
+                    amount={isEmpty ? "£0.00" : "£4,150.00"}
                     label="Total Cost"
                     icon={<TotalCostIcon />}
                 />
                 <PaymentStatCard
-                    amount="£3,050.00"
+                    amount={isEmpty ? "£0.00" : "£3,050.00"}
                     label="Amount Paid"
                     icon={<AmountPaidIcon />}
                 />
                 <PaymentStatCard
-                    amount="£1,100.00"
+                    amount={isEmpty ? "£0.00" : "£1,100.00"}
                     label="Outstanding Payments"
                     icon={<OutstandingIcon />}
                 />
             </div>
 
             {/* Payment History */}
+            {isEmpty ? (
+                <EmptyState emptyText="No Payment Activity Found" />
+            ) : (
             <Card>
                 <CardContent className="p-5 sm:p-6">
                     <h2 className="text-lg font-bold text-[#111827] mb-1">Payment History</h2>
@@ -140,6 +145,7 @@ export default function PaymentsPage({ onMakePayment }: Readonly<PaymentsPagePro
                     <Pagination current={1} total={40} />
                 </CardContent>
             </Card>
+            )}
         </div>
     )
 }

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+// import { Card } from '@/components/ui/card'
 import { ArrowRight } from 'lucide-react'
 
 export default function Services() {
@@ -82,7 +82,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {features.map((feature, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i+1} className="flex items-center gap-2">
                 <span className="text-yellow-400 text-xl">+</span>
                 <div>
                   <h3 className="font-semibold text-sm">{feature.title}</h3>
@@ -99,7 +99,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="space-y-16">
             {services.map((service, i) => (
-              <div key={i} className={`grid md:grid-cols-2 gap-8 items-center ${i % 2 === 1 ? 'md:grid-cols-2 md:[&>*:first-child]:order-2' : ''}`}>
+              <div key={i+1} className={`grid md:grid-cols-2 gap-8 items-center ${i % 2 === 1 ? 'md:grid-cols-2 md:[&>*:first-child]:order-2' : ''}`}>
                 <div className="relative h-80 rounded-lg overflow-hidden bg-[#111827]">
                   <Image
                     src={service.image || "/placeholder.svg"}

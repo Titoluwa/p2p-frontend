@@ -46,15 +46,20 @@ export interface VerifyAccountResponse {
 }
 
 export interface AuthUser {
-    id: string
-    email: string
-    firstName: string
-    lastName: string
-    fullName: string
-    phone: string
-    role: string
-    status: string
-    avatar?: string
+    message: string,
+    data: {
+        user:{
+            id: string
+            email: string
+            firstName: string
+            lastName: string
+            fullName: string
+            phone: string
+            role: string
+            status: string
+            avatar?: string
+        }
+    }
 }
 
 export interface RefreshTokenResponse {

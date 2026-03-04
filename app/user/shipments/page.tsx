@@ -12,6 +12,7 @@ import { TabBar } from "@/components/user-shipment/bars"
 import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
 import { EmptyState } from "@/components/customer-dashboard/empty-state"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 // ── Mock Data
 
@@ -62,21 +63,24 @@ const MOCK_SHIPMENTS: Shipment[] = [
 
 // ── Main Page
 interface MyShipmentsPageProps {
-    onViewDetails?: (id: string) => void
-    onRequestQuote?: () => void
     isEmpty?: boolean
 }
 
-export default function MyShipmentsPage({ onViewDetails, onRequestQuote, isEmpty = false, }: Readonly<MyShipmentsPageProps>) {
+export default function MyShipmentsPage({ isEmpty = false, }: Readonly<MyShipmentsPageProps>) {
     const [activeTab, setActiveTab] = useState<TabFilter>("All")
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
+    const router = useRouter()
 
     const stats = isEmpty
         ? { active: 0, completed: 0, pending: 0, failed: 0 }
-        : { active: 25, completed: 25, pending: 25, failed: 25 }
+        : { active: 15, completed: 25, pending: 5, failed: 2 }
 
     const shipments = isEmpty ? [] : MOCK_SHIPMENTS
+
+    function onViewDetails(id: string) {
+        router.push(`/user/shipments/${id}`)
+    }
 
     return (
         <div className="space-y-6 lg:space-y-8">
@@ -104,74 +108,75 @@ export default function MyShipmentsPage({ onViewDetails, onRequestQuote, isEmpty
                 <StatCard count={stats.pending} label="Pending Shipments" icon={<PendingIcon />} />
                 <StatCard count={stats.failed} label="Failed Shipments" icon={<FailedIcon />} />
             </div>
-
-            {/* Tab Bar */}
-            <TabBar active={activeTab} onChange={setActiveTab} />
-
-            {/* Content */}
             {isEmpty ? (
                 <EmptyState emptyText="No Shipment Found" />
             ) : (
-                <Card>
-                    <CardContent className="p-5 sm:p-6">
-                        <h2 className="text-lg font-bold text-[#111827] mb-5">All Shipments</h2>
+                <>
+                    {/* Tab Bar */}
+                    <TabBar active={activeTab} onChange={setActiveTab} />
 
-                        {/* Search + Filter */}
-                        <div className="flex gap-3 mb-6">
-                            <div className="relative flex-1">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                <Input
-                                    placeholder="Search for shipment ID, route or status"
-                                    value={search}
-                                    onChange={e => setSearch(e.target.value)}
-                                    className="pl-9"
-                                />
+                    {/* Content */}
+                    <Card>
+                        <CardContent className="p-5 sm:p-6">
+                            <h2 className="text-lg font-bold text-[#111827] mb-5">All Shipments</h2>
+
+                            {/* Search + Filter */}
+                            <div className="flex gap-3 mb-6">
+                                <div className="relative flex-1">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <Input
+                                        placeholder="Search for shipment ID, route or status"
+                                        value={search}
+                                        onChange={e => setSearch(e.target.value)}
+                                        className="pl-9"
+                                    />
+                                </div>
+                                <FilterDropdown options={FILTER_OPTIONS} value={filter} onChange={setFilter} />
                             </div>
-                            <FilterDropdown options={FILTER_OPTIONS} value={filter} onChange={setFilter} />
-                        </div>
 
-                        {/* Table */}
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
-                                <thead>
-                                    <tr className="border-b border-gray-200">
-                                        {["Shipment ID", "Vehicle", "Route", "Status", "Estimated Arrival", "Action"].map(h => (
-                                            <th
-                                                key={h}
-                                                className="text-left font-semibold text-[#111827] pb-3 pr-6 last:pr-0"
-                                            >
-                                                {h}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {shipments.map((s, i) => (
-                                        <tr key={i+1} className="border-b border-gray-100 last:border-0">
-                                            <td className="py-4 pr-6 text-gray-700 align-top">{s.id}</td>
-                                            <td className="py-4 pr-6 text-gray-700 align-top whitespace-pre-line">{s.vehicle}</td>
-                                            <td className="py-4 pr-6 text-gray-700 align-top whitespace-pre-line">{s.route}</td>
-                                            <td className="py-4 pr-6 align-top">
-                                                <StatusBadge status={s.status} />
-                                            </td>
-                                            <td className="py-4 pr-6 text-gray-700 align-top">{s.estimatedArrival}</td>
-                                            <td className="py-4 align-top">
-                                                <button
-                                                    onClick={() => onViewDetails?.(s.id)}
-                                                    className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap"
+                            {/* Table */}
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead>
+                                        <tr className="border-b border-gray-200">
+                                            {["Shipment ID", "Vehicle", "Route", "Status", "Estimated Arrival", "Action"].map(h => (
+                                                <th
+                                                    key={h}
+                                                    className="text-left font-semibold text-[#111827] pb-3 pr-6 last:pr-0"
                                                 >
-                                                    View Details
-                                                </button>
-                                            </td>
+                                                    {h}
+                                                </th>
+                                            ))}
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        {shipments.map((s, i) => (
+                                            <tr key={i + 1} className="border-b border-gray-100 last:border-0">
+                                                <td className="py-4 pr-6 text-gray-700 align-top">{s.id}</td>
+                                                <td className="py-4 pr-6 text-gray-700 align-top whitespace-pre-line">{s.vehicle}</td>
+                                                <td className="py-4 pr-6 text-gray-700 align-top whitespace-pre-line">{s.route}</td>
+                                                <td className="py-4 pr-6 align-top">
+                                                    <StatusBadge status={s.status} />
+                                                </td>
+                                                <td className="py-4 pr-6 text-gray-700 align-top">{s.estimatedArrival}</td>
+                                                <td className="py-4 align-top">
+                                                    <button
+                                                        onClick={() => onViewDetails(s.id)}
+                                                        className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap"
+                                                    >
+                                                        View Details
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <Pagination current={1} total={40} />
-                    </CardContent>
-                </Card>
+                            <Pagination current={1} total={40} />
+                        </CardContent>
+                    </Card>
+                </>
             )}
         </div>
     )

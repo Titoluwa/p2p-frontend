@@ -96,7 +96,8 @@ export const authService = {
 
     async getCurrentUser(): Promise<AuthUser> {
         try {
-            return await apiClient.get<AuthUser>('/auth/me')
+            const response = await apiClient.get<AuthUser>('/auth')
+            return response
         } catch (error) {
             authApi.removeToken()
             throw error
