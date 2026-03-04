@@ -39,7 +39,7 @@ export default function Home() {
     },
     {
       id: 5,
-      title: 'Non-Running & Salvage Vehicles',
+      title: 'Non-running & Salvage Vehicles',
       description: 'Safe transportation of non-operational and salvage vehicles.',
       icon: '🔧',
     },

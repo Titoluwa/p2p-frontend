@@ -43,7 +43,7 @@ export default function Services() {
       description: 'We offer specialized shipping for non-operational vehicles, including salvage cars, project vehicles, and damaged goods. All necessary lifting and loading equipment is used to protect the vehicle during transport.',
       image: '/placeholder.svg',
       icon: '🔧',
-      category: 'Non-Running & Shipping Vehicles',
+      category: 'Non-running & Shipping Vehicles',
     },
   ]
 

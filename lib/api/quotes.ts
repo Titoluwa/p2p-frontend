@@ -1,39 +1,23 @@
 import { apiClient } from '@/lib/api/client'
-import { CustomerInfo, VehicleInfo } from '@/lib/types/constant'
-import { ApiResponse } from '@/lib/types/api'
+// import { CustomerInfo, VehicleInfo } from '@/lib/types/constant'
+import { ApiResponse, CreateQuotePayload } from '@/lib/types/api'
 
-export interface CreateQuotePayload {
-    customer: CustomerInfo
-    vehicle: VehicleInfo
-    route: {
-        originCountry: string
-        destinationCountry: string
-        shippingDate?: string // ISO string — serialise Date before calling
-    }
-}
 
 export interface Quote {
-    id: string
-    status: 'pending' | 'reviewed' | 'accepted' | 'rejected'
-    customer: CustomerInfo
-    vehicle: VehicleInfo
-    route: {
-        originCountry: string
-        destinationCountry: string
-        shippingDate?: string
-    }
-    estimatedPrice?: number
-    currency?: string
-    createdAt: string
-    updatedAt: string
+  id: string
+  status: 'pending' | 'reviewed' | 'accepted' | 'rejected'
+  estimatedPrice?: number
+  currency?: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface CreateQuoteResponse extends ApiResponse<Quote> {
-    data: Quote
+  data: Quote
 }
 
 export interface GetQuotesResponse extends ApiResponse<Quote[]> {
-    data: Quote[]
+  data: Quote[]
 }
 
 export const quoteApi = {

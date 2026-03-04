@@ -20,18 +20,23 @@ export default function RequestQuotePage() {
     const [error, setError] = useState<string | null>(null)
 
     const [customer, setCustomer] = useState<CustomerInfo>({
-        firstName: user?.firstName ?? 'Kunle',
-        lastName: user?.lastName ?? 'Remi',
-        email: user?.email ?? 'kunle.remi25@gmail.com',
-        phone: user?.phone ?? '+234 XXX XXX XXX',
+        firstName: user?.firstName ?? '',
+        lastName: user?.lastName ?? '',
+        email: user?.email ?? '',
+        phone: user?.phone ?? '',
     })
 
     const [vehicle, setVehicle] = useState<VehicleInfo>({
-        vehicleType: '', vin: '', make: '', model: '', year: '', condition: '',
+        vehicleType: '', vin: '', make: '', model: '',
+        year: '', condition: '', length: '', width: '', height: '', weight: '',
     })
 
     const [route, setRoute] = useState<RouteInfo>({
-        originCountry: 'United Kingdom', destinationCountry: '', shippingDate: undefined,
+        originCountry: 'United Kingdom',
+        originPort: '',
+        destinationCountry: '',
+        destinationPort: '',
+        shippingDate: undefined,
     })
 
     const handleNext = async () => {
@@ -40,16 +45,34 @@ export default function RequestQuotePage() {
             return
         }
 
-        // Step 4 → submit
         setIsLoading(true)
         setError(null)
         try {
             await quoteApi.createQuote({
-                customer,
-                vehicle,
+                customer: {
+                    fullName: `${customer.firstName} ${customer.lastName}`.trim(),
+                    email: customer.email,
+                    phone: customer.phone,
+                },
+                vehicle: {
+                    type: vehicle.vehicleType,
+                    vin: vehicle.vin,
+                    make: vehicle.make,
+                    model: vehicle.model,
+                    year: vehicle.year,
+                    condition: vehicle.condition as 'Running' | 'Non-running',
+                    dimensions: {
+                        length: Number.parseFloat(vehicle.length),
+                        width: Number.parseFloat(vehicle.width),
+                        height: Number.parseFloat(vehicle.height),
+                    },
+                    weight: Number.parseFloat(vehicle.weight),
+                },
                 route: {
                     originCountry: route.originCountry,
+                    originPort: route.originPort,
                     destinationCountry: route.destinationCountry,
+                    destinationPort: route.destinationPort,
                     shippingDate: route.shippingDate?.toISOString(),
                 },
             })
@@ -61,9 +84,7 @@ export default function RequestQuotePage() {
         }
     }
 
-    const handleBack = () => {
-        if (step > 1) setStep(s => s - 1)
-    }
+    const handleBack = () => { if (step > 1) setStep(s => s - 1) }
 
     let nextButtonLabel: string;
 

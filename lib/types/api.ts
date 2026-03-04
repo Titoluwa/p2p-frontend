@@ -99,3 +99,32 @@ export class ApiError extends Error {
         this.name = 'ApiError'
     }
 }
+
+export interface CreateQuotePayload {
+    customer: {
+        fullName: string
+        email: string
+        phone: string
+    }
+    vehicle: {
+        type: string
+        vin: string
+        make: string
+        model: string
+        year: string
+        condition: 'Running' | 'Non-running' | ''
+        dimensions: {
+            length: number
+            width: number
+            height: number
+        }
+        weight: number
+    }
+    route: {
+        originCountry: string
+        originPort: string
+        destinationCountry: string
+        destinationPort: string
+        shippingDate?: string
+    }
+}

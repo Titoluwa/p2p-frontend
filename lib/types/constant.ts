@@ -97,13 +97,19 @@ export interface VehicleInfo {
     make: string
     model: string
     year: string
-    condition: "Running" | "Non-Running" | ""
+    condition: 'Running' | 'Non-running' | ''
+    length: string   // stored as string in form, converted to number on submit
+    width: string
+    height: string
+    weight: string
 }
 
 export interface RouteInfo {
     originCountry: string
+    originPort: string
     destinationCountry: string
-    shippingDate: Date | undefined
+    destinationPort: string
+    shippingDate?: Date
 }
 
 export const VEHICLE_TYPES = [
@@ -112,6 +118,7 @@ export const VEHICLE_TYPES = [
     "Trucks & Motorhomes",
     "Trailers",
     "Wheeled Equipment (Agricultural Equipment)",
+    "Others"
 ]
 
 export const COUNTRIES = [

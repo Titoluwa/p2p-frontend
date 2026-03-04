@@ -8,6 +8,7 @@ import { RouteInfo, COUNTRIES, ORIGIN_COUNTRIES } from '@/lib/types/constant'
 import { CustomSelect } from '@/components/customer-dashboard/quotes/CustomSelect'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
+import { Input } from '@/components/ui/input'
 
 export function Step3RouteInfo({ data, onChange }: Readonly<{ data: RouteInfo; onChange: (d: RouteInfo) => void }>) {
     return (
@@ -17,15 +18,30 @@ export function Step3RouteInfo({ data, onChange }: Readonly<{ data: RouteInfo; o
                 <CardDescription>Where do you want to ship your vehicle?</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
+                <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                <Label>Origin Country</Label>
-                <CustomSelect placeholder="Select origin" options={ORIGIN_COUNTRIES} value={data.originCountry}
+                    <Label>Origin Country</Label>
+                    <CustomSelect placeholder="Select origin" options={ORIGIN_COUNTRIES} value={data.originCountry}
                     onChange={val => onChange({ ...data, originCountry: val })} />
                 </div>
                 <div className="space-y-1.5">
-                <Label>Destination Country</Label>
-                <CustomSelect placeholder="Select destination" options={COUNTRIES} value={data.destinationCountry}
+                    <Label htmlFor="originPort">Origin Port</Label>
+                    <Input id="originPort" placeholder="e.g., Port of Felixstowe" value={data.originPort}
+                    onChange={e => onChange({ ...data, originPort: e.target.value })} />
+                </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                    <Label>Destination Country</Label>
+                    <CustomSelect placeholder="Select destination" options={COUNTRIES} value={data.destinationCountry}
                     onChange={val => onChange({ ...data, destinationCountry: val })} />
+                </div>
+                <div className="space-y-1.5">
+                    <Label htmlFor="destinationPort">Destination Port</Label>
+                    <Input id="destinationPort" placeholder="e.g., Port of Lagos" value={data.destinationPort}
+                    onChange={e => onChange({ ...data, destinationPort: e.target.value })} />
+                </div>
                 </div>
                 <div className="space-y-1.5">
                 <Label>Preferred Shipping Date (Optional)</Label>
