@@ -111,9 +111,9 @@ export default function VerifyPage() {
 
                             {/* Status card */}
                             {(() => {
-                                let statusCardClass = 'border-red-200 bg-red-50'
+                                let statusCardClass = 'border-red-200 bg-[#FDE8E8]'
                                 if (status === 'loading') statusCardClass = 'border-gray-200 bg-gray-50'
-                                else if (status === 'success') statusCardClass = 'border-green-200 bg-green-50'
+                                else if (status === 'success') statusCardClass = 'border-green-200 bg-[#DCF1E4]'
                                 return (
                                     <div className={`rounded-xl border p-6 flex flex-col items-center text-center transition-all duration-500 ${statusCardClass}`}>
                                         <StatusIcon status={status} />

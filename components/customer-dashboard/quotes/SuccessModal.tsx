@@ -20,13 +20,13 @@ export function SuccessModal({ open, onClose }: Readonly<{ open: boolean; onClos
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                     <Link href="/user/shipments">
-                        <Button variant="outline" className="w-full border-[#2563EB] text-[#2563EB] hover:bg-blue-50" onClick={onClose}>
-                        View my Shipments
+                        <Button variant="outline" className="w-full border-[#2563EB] text-[#2563EB] hover:bg-[#DEE8FC]" onClick={onClose}>
+                            View my Shipments
                         </Button>
                     </Link>
                     <Link href="/user/dashboard">
                         <Button className="w-full bg-[#2563EB] hover:bg-[#2563EB]/80 text-white" onClick={onClose}>
-                        Go to Dashboard
+                            Go to Dashboard
                         </Button>
                     </Link>
                 </div>

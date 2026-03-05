@@ -114,7 +114,7 @@ export default function RequestQuotePage() {
             )}
 
             <div className="flex items-center justify-between max-w-4xl mx-auto pt-2">
-                <Button variant="outline" className="w-44 border-[#2563EB] text-[#2563EB] hover:bg-blue-50"
+                <Button variant="outline" className="w-44 border-[#2563EB] text-[#2563EB] hover:bg-[#DEE8FC]"
                     onClick={step === 1 ? undefined : handleBack} disabled={isLoading}>
                     {step === 1 ? 'Cancel' : 'Back'}
                 </Button>

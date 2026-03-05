@@ -83,7 +83,7 @@ export default function AdminSignInPage() {
 
 
                             {displayError && (
-                                <div className="mb-4 rounded-md border border-red-300 bg-red-50 p-3">
+                                <div className="mb-4 rounded-md border border-red-300 bg-[#FDE8E8] p-3">
                                     <p className="text-sm text-red-600 font-medium">
                                         {displayError}
                                     </p>

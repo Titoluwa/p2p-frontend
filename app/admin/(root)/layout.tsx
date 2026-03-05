@@ -75,7 +75,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
 
                 {/* Main Content */}
                 <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-[#F8FAFC]">
-                    {children}
+                    <div className="py-2 px-3">{children}</div>
                 </main>
             </div>
         </div>

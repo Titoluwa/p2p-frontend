@@ -16,7 +16,7 @@ export function ActiveIcon() {
 
 export function CompletedIcon() {
     return (
-        <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+        <div className="w-12 h-12 rounded-full bg-[#DCF1E4] flex items-center justify-center shrink-0">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9" stroke="#16a34a" strokeWidth="1.5" />
                 <path d="M8 12l3 3 5-5" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -38,10 +38,10 @@ export function PendingIcon() {
 
 export function FailedIcon() {
     return (
-        <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+        <div className="w-12 h-12 rounded-full bg-[#FDE8E8] flex items-center justify-center shrink-0">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="#dc2626" strokeWidth="1.5" />
-                <path d="M12 8v4M12 16v.5" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="12" cy="12" r="9" stroke="#DC2626" strokeWidth="1.5" />
+                <path d="M12 8v4M12 16v.5" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" />
             </svg>
         </div>
     )
