@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "public/images/world-map.s"  ],
   "exclude": ["node_modules"]
 }
