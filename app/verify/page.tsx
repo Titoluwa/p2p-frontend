@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -45,7 +45,7 @@ function StatusIcon({ status }: { readonly status: VerificationStatus }): React.
     )
 }
 
-export default function VerifyPage() {
+function VerifyContent() {
     const { verifyAccount } = useAuth()
     const searchParams = useSearchParams()
     const router = useRouter()
@@ -202,5 +202,13 @@ export default function VerifyPage() {
                 </div>
             </div>
         </div>
+    )
+}
+
+export default function VerifyPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <VerifyContent />
+        </Suspense>
     )
 }
