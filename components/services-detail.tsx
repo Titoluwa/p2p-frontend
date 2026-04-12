@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-// import { StarIcon } from "@/public/icons"
 
 interface Service {
     category: string
@@ -79,150 +78,64 @@ const services: Service[] = [
     },
 ]
 
-// image-left layout (odd indexes: 0, 2, 4)
-// function ServiceRowImageLeft({ service }: Readonly<{ service: Service }>) {
-//     return (
-//         <div className={`relative flex flex-col md:flex-row md:items-stretch min-h-[420px] md:min-h-[380px] ${service.mainBgColor}`}>
-
-//             {/* Image — overlaps out of card on desktop */}
-//             <div className=" w-[48%] h-auto rounded-2xl overflow-hidden md:absolute md:left-0 md:top-8 md:bottom-8 md:rounded-2xl md:z-10">
-//                 <Image src={service.image} alt={service.imageAlt} fill className="object-cover"/>
-//             </div>
-
-//             <div className={`${service.bgColor} rounded-2xl mt-4 md:mt-0 md:ml-[36%] md:pl-[16%] md:pr-10 md:py-10 px-6 py-8 flex-1 flex flex-col justify-center`}>
-//                 <div className="flex items-center gap-2 mb-5 max-w-fit border border-[0.5px] border-[#6B7280] rounded-xl px-3 py-1.5 bg-transparent">
-//                     <StarIcon />
-//                     <span className="text-sm text-[#111827] font-medium whitespace-nowrap">{service.category}</span>
-//                 </div>
-
-//                 <h2 className="text-2xl sm:text-3xl font-bold text-[#0A2540] leading-tight mb-4">
-//                     {service.title}
-//                 </h2>
-//                 <p className="text-sm text-[#6B7280] leading-relaxed mb-8">
-//                     {service.description}
-//                 </p>
-
-//                 <Link href={service.href ?? "/quote"}>
-//                     <Button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold px-6 py-5 rounded-xl w-fit">
-//                         Request a Quote
-//                     </Button>
-//                 </Link>
-//             </div>
-//         </div>
-//     )
-// }
-
-// // image-right layout (even indexes: 1, 3)
-// function ServiceRowImageRight({ service }: Readonly<{ service: Service }>) {
-//     return (
-//         <div className={`max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-14 relative flex flex-col md:flex-row md:items-stretch min-h-[420px] md:min-h-[380px] ${service.mainBgColor}`}>
-//         {/* Image — overlaps out of card on desktop, right side */}
-//             <div className="w-full h-56 rounded-2xl overflow-hidden md:absolute md:right-0 md:top-8 md:bottom-8 md:w-[48%] md:h-auto md:rounded-2xl md:z-10">
-//                 <Image src={service.image} alt={service.imageAlt} fill className="object-cover"/>
-//             </div>
-
-//             <div className={`${service.bgColor} rounded-2xl mt-4 md:mt-0 md:mr-[36%] md:pr-[16%] md:pl-10 md:py-10 px-6 py-8 flex-1 flex flex-col justify-center`}>
-//                 <div className="flex items-center gap-2 mb-5 max-w-fit border-[0.5px] border-[#6B7280] rounded-xl px-3 py-1.5 bg-transparent">
-//                     <StarIcon />
-//                     <span className="text-sm text-[#111827] font-medium whitespace-nowrap">{service.category}</span>
-//                 </div>
-
-//                 <h2 className="text-2xl sm:text-3xl font-bold text-[#0A2540] leading-tight mb-4">
-//                     {service.title}
-//                 </h2>
-//                 <p className="text-sm text-[#6B7280] leading-relaxed mb-8">
-//                     {service.description}
-//                 </p>
-
-//                 <Link href={service.href ?? "/quote"}>
-//                     <Button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold px-6 py-5 rounded-xl w-fit">
-//                         Request a Quote
-//                     </Button>
-//                 </Link>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export function ServicesDetail() {
-//     return (
-//         <section className="py-12 md:py-16 bg-red-500">
-//             <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-14 flex flex-col gap-10 md:gap-16 bg-blue-500">
-//                 {services.map((service, i) =>
-//                     i % 2 === 0 ? (
-//                         <ServiceRowImageLeft key={service.category} service={service} />
-//                     ) : (
-//                         <ServiceRowImageRight key={service.category} service={service} />
-//                     )
-//                 )}
-//             </div>
-//         </section>
-//     )
-// }
-
 function ServiceCard({ service, imageRight = false }: Readonly<{ service: Service; imageRight?: boolean }>) {
     return (
-        <div className="flex flex-col md:relative md:flex-row md:items-stretch md:min-h-[380px]">
-    
-        {/* ── Image ── */}
-        {/* Mobile: normal flow, full-width, fixed height, rounded top */}
-        {/* Desktop: absolute, overlapping the card, left or right */}
-        <div className={`
-            relative w-full h-56 rounded-2xl overflow-hidden shrink-0
-            md:absolute md:h-auto md:w-[48%] md:top-8 md:bottom-8 md:rounded-2xl md:z-10
-            ${imageRight ? "md:right-0" : "md:left-0"}
-        `}>
-            <Image
-            src={service.image}
-            alt={service.imageAlt}
-            fill
-            className="object-cover"
-            />
-        </div>
-    
-        {/* ── Card (text content) ── */}
-        {/* Mobile: normal flow below image, rounded bottom, full padding */}
-        {/* Desktop: offset inward to create overlap effect */}
-        <div className={`
-            ${service.bgColor} rounded-2xl
-            px-6 py-8
-            md:py-10 md:flex-1 md:flex md:flex-col md:justify-center
-            ${imageRight
-            ? "md:mr-[36%] md:pr-[16%] md:pl-10"
-            : "md:ml-[36%] md:pl-[16%] md:pr-10"
-            }
-        `}>
-            {/* Badge */}
-            <div className="flex items-center gap-2 mb-5 max-w-fit border border-[#E5E7EB] rounded-xl px-3 py-1.5 bg-white">
-            <StarIcon />
-            <span className="text-sm text-[#111827] font-medium whitespace-nowrap">{service.category}</span>
+        <div className="flex flex-col md:relative md:flex-row md:items-stretch md:min-h-[380px] md:my-16 md:mx-32 lg:my-10 lg:mx-20 my-8 mx-3">
+        
+            {/* ── Image ── */}
+            {/* Mobile: normal flow, full-width, fixed height, rounded top */}
+            {/* Desktop: absolute, overlapping the card, left or right */}
+            <div className={`
+                relative w-full h-56 rounded-2xl overflow-hidden shrink-0
+                md:absolute md:h-auto md:w-[48%] md:top-8 md:bottom-8 md:rounded-2xl md:z-10
+                ${imageRight ? "md:right-0" : "md:left-0"}
+            `}>
+                <Image src={service.image} alt={service.imageAlt} fill className="object-cover"/>
             </div>
-    
-            <h2 className={`text-2xl sm:text-3xl font-bold leading-tight mb-4 ${service.bgColor === "bg-[#0A2540]" ? "text-white" : "text-[#0A2540]"}`}>
-            {service.title}
-            </h2>
-            <p className={`text-sm leading-relaxed mb-8 ${service.bgColor === "bg-[#0A2540]" ? "text-gray-300" : "text-[#6B7280]"}`}>
-            {service.description}
-            </p>
-    
-            <Link href={service.href ?? "/quote"}>
-            <Button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold px-6 py-5 rounded-xl w-fit">
-                Request a Quote
-            </Button>
-            </Link>
-        </div>
+        
+            {/* ── Card (text content) ── */}
+            {/* Mobile: normal flow below image, rounded bottom, full padding */}
+            {/* Desktop: offset inward to create overlap effect */}
+            <div className={` max-h-7xl
+                ${service.bgColor} rounded-2xl
+                px-6 py-8
+                md:py-10 md:flex-1 md:flex md:flex-col md:justify-center
+                ${imageRight
+                ? "md:mr-[36%] md:pr-[16%] md:pl-10"
+                : "md:ml-[36%] md:pl-[16%] md:pr-10"
+                }
+            `}>
+                {/* Badge */}
+                <div className="flex items-center gap-2 mb-5 max-w-fit border border-[#6B7280] rounded-xl px-3 py-1.5 bg-transparent">
+                    <StarIcon />
+                    <span className="text-sm text-[#111827] font-medium whitespace-nowrap">{service.category}</span>
+                </div>
+        
+                <h2 className={`text-2xl sm:text-3xl font-bold leading-tight mb-4 ${service.bgColor === "bg-[#0A2540]" ? "text-white" : "text-[#0A2540]"}`}>
+                    {service.title}
+                </h2>
+                <p className={`text-sm leading-relaxed mb-8 ${service.bgColor === "bg-[#0A2540]" ? "text-gray-300" : "text-[#6B7280]"}`}>
+                    {service.description}
+                </p>
+        
+                <Link href={service.href ?? "/quote"}>
+                    <Button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold px-6 py-5 rounded-xl w-fit">
+                        Request a Quote
+                    </Button>
+                </Link>
+            </div>
         </div>
     )
 }
  
 export function ServicesDetail() {
     return (
-        <section className="py-12 md:py-16 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-14 flex flex-col gap-10 md:gap-16">
+        <section className="max-w-8xl mx-auto py-12 md:py-16 bg-[#F8FAFC]">
             {services.map((service, i) => (
-            <ServiceCard key={service.category} service={service} imageRight={i % 2 !== 0} />
+                <div key={service.category} className={`px-4 sm:px-6 lg:px-14 flex flex-col gap-10 md:gap-16 ${service.mainBgColor}`}>
+                    <ServiceCard key={service.category} service={service} imageRight={i % 2 !== 0} />
+                </div>
             ))}
-        </div>
         </section>
     )
 }
