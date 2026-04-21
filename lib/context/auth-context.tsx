@@ -13,6 +13,8 @@ interface AuthContextType {
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
   verifyAccount: (token: string) => Promise<VerifyAccountResponse>
+  forgotPassword: (email: string) => Promise<{ success: boolean; message?: string }>
+  resetPassword: (token: string, password: string) => Promise<{ success: boolean; message?: string }>
   error: string | null
   clearError: () => void
 }
@@ -73,6 +75,28 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     }
   }
 
+  const forgotPassword = async (email: string) => {
+    try {
+      setError(null)
+      const response = await authService.forgotPassword(email)
+      return response
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Forgot password failed'
+      setError(errorMessage)
+      throw err
+    }
+  }
+  const resetPassword = async (token: string, password: string) => {
+    try {
+      setError(null)
+      const response = await authService.resetPassword(token, password)
+      return response
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Reset password failed'
+      setError(errorMessage)
+      throw err
+    }
+  }
   const logout = async () => {
     try {
       await authService.logout()
@@ -112,13 +136,15 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     isLoading,
     isAuthenticated: !!user,
     verifyAccount,
+    forgotPassword,
     login,
     register,
     logout,
     refreshUser,
+    resetPassword,
     error,
     clearError,
-  }), [user, isLoading, error, verifyAccount, login, register, logout, refreshUser, clearError])
+  }), [user, isLoading, error, verifyAccount, login, register, logout, refreshUser, forgotPassword, resetPassword, clearError])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

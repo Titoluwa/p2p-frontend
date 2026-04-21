@@ -27,16 +27,7 @@ export interface LoginResponse {
     data: {
         token: string
         refreshToken?: string
-        user: {
-            id: string
-            email: string
-            firstName: string
-            lastName: string
-            fullName: string
-            phone: string
-            role: string
-            status: string
-        }
+        user: AuthUser
     }
 }
 
@@ -46,20 +37,15 @@ export interface VerifyAccountResponse {
 }
 
 export interface AuthUser {
-    message: string,
-    data: {
-        user:{
-            id: string
-            email: string
-            firstName: string
-            lastName: string
-            fullName: string
-            phone: string
-            role: string
-            status: string
-            avatar?: string
-        }
-    }
+    id: string
+    email: string
+    firstName: string
+    lastName: string
+    fullName: string
+    phone: string
+    role: string
+    status: string
+    avatar?: string
 }
 
 export interface RefreshTokenResponse {

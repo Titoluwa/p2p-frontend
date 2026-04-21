@@ -96,8 +96,8 @@ export const authService = {
 
     async getCurrentUser(): Promise<AuthUser> {
         try {
-            const response = await apiClient.get<AuthUser>('/auth')
-            return response
+            const response = await apiClient.get<{success: boolean, message?: string, data: {user: AuthUser}}>('/auth')
+            return response.data.user
         } catch (error) {
             authApi.removeToken()
             throw error
@@ -118,9 +118,10 @@ export const authService = {
         }
     },
 
-    async forgotPassword(email: string): Promise<void> {
+    async forgotPassword(email: string): Promise<{ success: boolean; message?: string }> {
         try {
-            await apiClient.post('/auth/forgot-password', { email })
+            const response = await apiClient.post<{ success: boolean; message?: string }>('/auth/forgot-password', { email })
+            return response
         } catch (error) {
             if (error instanceof ApiError) {
                 throw new Error(error.message)
@@ -129,9 +130,10 @@ export const authService = {
         }
     },
 
-    async resetPassword( token: string, newPassword: string ): Promise<void> {
+    async resetPassword( token: string, newPassword: string ): Promise<{ success: boolean; message?: string }> {
         try {
-            await apiClient.post('/auth/reset-password', { token, newPassword })
+            const response = await apiClient.post<{ success: boolean; message?: string }>(`/auth/reset-password/${token}`, { newPassword, confirmPassword: newPassword })
+            return response
         } catch (error) {
             if (error instanceof ApiError) {
                 throw new Error(error.message)
