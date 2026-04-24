@@ -1,17 +1,16 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { AdminSidebar } from '@/components/admin/sidebar'
 import { Button } from '@/components/ui/button'
 import { Settings, Menu } from 'lucide-react'
 import { useAuth } from '@/lib/context/auth-context'
-// import { useRouter } from 'next/navigation'
 import Link from "next/link"
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const { isAuthenticated, isLoading, user } = useAuth()
+    const { isLoading, user } = useAuth()
     // const [loggedUser, setLoggedUser] = useState()
     // const router = useRouter()
 
@@ -67,8 +66,8 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
                             </Button>
                         </Link>
                         <div className="flex items-center gap-3 px-4 py-2 rounded-lg sm:border border-0 border-[#6B7280]">
-                            <img src={user?.data.user.avatar|| "/placeholder.svg"} alt={user?.data.user.firstName || "Admin"} className="w-8 h-8 rounded-full" />
-                            <span className="font-medium text-[#6B7280] hidden sm:inline">{user?.data.user.firstName || "Admin"} {user?.data.user.lastName || "User" }</span>
+                            <img src={user?.avatar|| "/placeholder.svg"} alt={user?.firstName || "Admin"} className="w-8 h-8 rounded-full" />
+                            <span className="font-medium text-[#6B7280] hidden sm:inline">{user?.firstName || "Admin"} {user?.lastName || "User" }</span>
                         </div>
                     </div>
                 </header>

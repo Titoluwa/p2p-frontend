@@ -94,7 +94,7 @@ export default function MyShipmentsPage({ isEmpty = false, }: Readonly<MyShipmen
                         Manage and track all your vehicle shipments
                     </p>
                 </div>
-                <Link href="/user/quotes">
+                <Link href="/user/quotes/request">
                     <Button className="bg-[#2563EB] hover:bg-[#2563EB]/80 text-white shrink-0">
                         Request a Quote
                     </Button>

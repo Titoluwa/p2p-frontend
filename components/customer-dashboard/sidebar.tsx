@@ -7,7 +7,8 @@ import { useAuth } from '@/lib/context/auth-context'
 
 const navItems = [
   { label: 'Dashboard', href: '/user/dashboard', icon: LayoutGrid },
-  { label: 'Request a Quote', href: '/user/quotes', icon: FileText },
+  { label: 'Request a Quote', href: '/user/quotes/request', icon: FileText },
+  { label: 'My Quotes', href: '/user/quotes', icon: FileText },
   { label: 'My Shipments', href: '/user/shipments', icon: Ship },
   { label: 'Payments', href: '/user/payments', icon: CreditCard },
   { label: 'Documents', href: '/user/documents', icon: FileText },

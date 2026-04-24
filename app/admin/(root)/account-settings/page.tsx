@@ -31,7 +31,7 @@ const TAB_CLASS =
 // ── SectionHeader ─────────────────────────────────────────────────────────────
 // Renders the icon + bold title + separator that tops every tab card
 
-function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
+function SectionHeader({ icon, title }: Readonly<{ icon: React.ReactNode; title: string }>) {
     return (
         <>
             <div className="flex items-center gap-2 mb-4">
@@ -50,11 +50,11 @@ function CustomSelect({
     value,
     options,
     onChange,
-}: {
+}: Readonly<{
     value: string
     options: string[]
     onChange: (v: string) => void
-}) {
+}>) {
     const [open, setOpen] = useState(false)
 
     return (
@@ -94,12 +94,12 @@ function CheckboxRow({
     label,
     checked,
     onCheckedChange,
-}: {
+}: Readonly<{
     id: string
     label: string
     checked: boolean
     onCheckedChange: (v: boolean) => void
-}) {
+}>) {
     return (
         <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
             <label htmlFor={id} className="text-sm text-gray-700 cursor-pointer select-none">
@@ -122,11 +122,11 @@ function ApiKeyRow({
     label,
     maskedKey,
     onRegenerate,
-}: {
+}: Readonly<{
     label: string
     maskedKey: string
     onRegenerate: () => void
-}) {
+}>) {
     return (
         <div className="flex items-center justify-between border border-gray-200 rounded-lg px-4 py-4">
             <div>
@@ -151,11 +151,11 @@ function CreateApiKeyDialog({
     open,
     onClose,
     onGenerate,
-}: {
+}: Readonly<{
     open: boolean
     onClose: () => void
     onGenerate: (key: string) => void
-}) {
+}>) {
     const [keyName, setKeyName] = useState("")
     const [environment, setEnvironment] = useState("Production")
     const [permissions, setPermissions] = useState<Record<string, boolean>>({
@@ -255,11 +255,11 @@ function GeneratedKeyDialog({
     open,
     apiKey,
     onClose,
-}: {
+}: Readonly<{
     open: boolean
     apiKey: string
     onClose: () => void
-}) {
+}>) {
     const [copied, setCopied] = useState(false)
 
     const handleCopy = () => {
@@ -377,8 +377,8 @@ export default function AdminAccountSettings() {
                             <div className="relative inline-block mb-8">
                                 <Avatar className="w-36 h-36">
                                     <AvatarFallback className="bg-gray-200 text-gray-400 text-3xl font-medium">
-                                        {user?.data.user.firstName?.slice(0, 1).toUpperCase()}
-                                        {user?.data.user.lastName?.slice(0, 1).toUpperCase()}
+                                        {user?.firstName?.slice(0, 1).toUpperCase()}
+                                        {user?.lastName?.slice(0, 1).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <button className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white shadow-md rounded-lg px-3 py-1.5 flex items-center gap-1.5 text-sm font-semibold text-gray-800 whitespace-nowrap border border-gray-100 hover:bg-gray-50 transition-colors">
@@ -390,22 +390,22 @@ export default function AdminAccountSettings() {
                             <div className="grid grid-cols-2 gap-4 pt-3">
                                 <div className="space-y-1.5">
                                     <Label htmlFor="firstName">First Name</Label>
-                                    <Input id="firstName" defaultValue={user?.data.user.firstName ?? "Kunle"} />
+                                    <Input id="firstName" defaultValue={user?.firstName ?? "Kunle"} />
                                 </div>
                                 <div className="space-y-1.5">
                                     <Label htmlFor="lastName">Last Name</Label>
-                                    <Input id="lastName" defaultValue={user?.data.user.lastName ?? "Remi"} />
+                                    <Input id="lastName" defaultValue={user?.lastName ?? "Remi"} />
                                 </div>
                             </div>
 
                             <div className="space-y-1.5">
                                 <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" defaultValue={user?.data.user.email ?? "kunle.remi25@gmail.com"} />
+                                <Input id="email" type="email" defaultValue={user?.email ?? "kunle.remi25@gmail.com"} />
                             </div>
 
                             <div className="space-y-1.5">
                                 <Label htmlFor="phone">Phone Number</Label>
-                                <Input id="phone" type="tel" defaultValue={user?.data.user.phone ?? "+234 568 768 5687"} />
+                                <Input id="phone" type="tel" defaultValue={user?.phone ?? "+234 568 768 5687"} />
                             </div>
 
                             <Button className="bg-[#2563EB] hover:bg-[#2563EB]/80 text-white">

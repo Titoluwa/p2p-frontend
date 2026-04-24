@@ -1,15 +1,15 @@
+// lib/quotes.ts
 import { apiClient } from '@/lib/api/client'
-// import { CustomerInfo, VehicleInfo } from '@/lib/types/constant'
-import { ApiResponse, CreateQuotePayload } from '@/lib/types/api'
+import { ApiResponse, CreateQuotePayload, GenerateQuotePayload, UpdateQuotePayload, UpdateStatusPayload } from '@/lib/types/api'
+import { Quote, QuoteRequest } from '@/lib/types/constant'
 
 
-export interface Quote {
-  id: string
-  status: 'pending' | 'reviewed' | 'accepted' | 'rejected'
-  estimatedPrice?: number
-  currency?: string
-  createdAt: string
-  updatedAt: string
+export interface QuoteRequestFilters {
+    status?: 'pending' | 'approved' | 'rejected'
+    page?: number
+    limit?: number
+    search?: string
+    [key: string]: unknown
 }
 
 export interface CreateQuoteResponse extends ApiResponse<Quote> {
@@ -20,28 +20,83 @@ export interface GetQuotesResponse extends ApiResponse<Quote[]> {
   data: Quote[]
 }
 
+export interface QuoteRequestResponse extends ApiResponse<QuoteRequest> {
+  data: QuoteRequest
+}
+
+export interface GetQuoteRequestsResponse extends ApiResponse<{ quoteRequests: QuoteRequest[] }> {
+  data: {
+    quoteRequests: QuoteRequest[]
+  }
+}
+
+// Public API
 export const quoteApi = {
-    /** Submit a new quote request */
-    createQuote(payload: CreateQuotePayload): Promise<CreateQuoteResponse> {
-        return apiClient.post<CreateQuoteResponse>('/quotes/request', payload)
-    },
+  /** POST /api/quotes/request — Submit a new quote request (rate-limited: 5/hr) */
+  createQuote(payload: CreateQuotePayload): Promise<CreateQuoteResponse> {
+    return apiClient.post<CreateQuoteResponse>('/quotes/request', payload)
+  },
 
-    /** Fetch all quotes for the authenticated user */
-    getAllQuotes(): Promise<GetQuotesResponse> {
-        return apiClient.get<GetQuotesResponse>('/quotes/requests')
-    },
+  /** GET /api/quotes/track/:referenceId — Track a quote by its reference ID */
+  trackQuote(referenceId: string): Promise<QuoteRequestResponse> {
+    return apiClient.get<QuoteRequestResponse>(`/quotes/track/${referenceId}`)
+  },
 
-    /** Fetch a single quote by ID */
-    getQuoteById(id: string): Promise<CreateQuoteResponse> {
-        return apiClient.get<CreateQuoteResponse>(`/quotes/requests/${id}`)
-    },
+  /** GET /api/quotes/requests — List all quote requests (supports filters) */
+  getAllQuoteRequests(filters?: QuoteRequestFilters): Promise<GetQuoteRequestsResponse> {
+    return apiClient.get<GetQuoteRequestsResponse>('/quotes/requests')
+  },
 
-    trackQuote(trackingNumber: string): Promise<CreateQuoteResponse> {
-        return apiClient.get<CreateQuoteResponse>(`/quotes/track/${trackingNumber}`)
-    },
+  /** GET /api/quotes/requests/user/:userId — List all quote requests by current user */
+  getUserQuoteRequests(userId: string): Promise<GetQuoteRequestsResponse> {
+    return apiClient.get<GetQuoteRequestsResponse>(`/quotes/requests/user/${userId}`)
+  },
 
-    // /** Delete/cancel a pending quote */
-    // deleteQuote(id: string): Promise<ApiResponse<null>> {
-    //     return apiClient.delete<ApiResponse<null>>(`/quotes/${id}`)
-    // },
+  /** GET /api/quotes/requests/:id — Get a specific quote request by ID */
+  getQuoteRequestById(id: string): Promise<QuoteRequestResponse> {
+    return apiClient.get<QuoteRequestResponse>(`/quotes/requests/${id}`)
+  },
+}
+
+// Admin API
+export const adminQuoteApi = {
+  /** PATCH /api/admin/quotes/requests/approve/:id — Approve a quote request */
+  approveQuoteRequest(id: string, payload?: UpdateStatusPayload): Promise<QuoteRequestResponse> {
+    return apiClient.patch<QuoteRequestResponse>(`/admin/quotes/requests/approve/${id}`, payload)
+  },
+
+  /** PATCH /api/admin/quotes/requests/reject/:id — Reject a quote request */
+  rejectQuoteRequest(id: string, payload?: UpdateStatusPayload): Promise<QuoteRequestResponse> {
+    return apiClient.patch<QuoteRequestResponse>(`/admin/quotes/requests/reject/${id}`, payload)
+  },
+
+  /** DELETE /api/admin/quotes/requests/:id — Delete a quote request */
+  deleteQuoteRequest(id: string): Promise<ApiResponse<null>> {
+    return apiClient.delete<ApiResponse<null>>(`/admin/quotes/requests/${id}`)
+  },
+
+  /** POST /api/admin/quotes/:requestId/generate — Generate a pricing quote from a request */
+  generateQuote(requestId: string, payload: GenerateQuotePayload): Promise<CreateQuoteResponse> {
+    return apiClient.post<CreateQuoteResponse>(`/admin/quotes/${requestId}/generate`, payload)
+  },
+
+  /** GET /api/admin/quotes — List all generated quotes */
+  getAllQuotes(): Promise<GetQuotesResponse> {
+    return apiClient.get<GetQuotesResponse>('/admin/quotes')
+  },
+
+  /** GET /api/admin/quotes/:id — Get a specific quote's details */
+  getQuoteById(id: string): Promise<CreateQuoteResponse> {
+    return apiClient.get<CreateQuoteResponse>(`/admin/quotes/${id}`)
+  },
+
+  /** PUT /api/admin/quotes/:id — Update a quote's details */
+  updateQuote(id: string, payload: UpdateQuotePayload): Promise<CreateQuoteResponse> {
+    return apiClient.put<CreateQuoteResponse>(`/admin/quotes/${id}`, payload)
+  },
+
+  /** POST /api/admin/quotes/:id/send — Send the quote email to the customer */
+  sendQuote(id: string): Promise<ApiResponse<null>> {
+    return apiClient.post<ApiResponse<null>>(`/admin/quotes/${id}/send`)
+  },
 }

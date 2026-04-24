@@ -119,3 +119,23 @@ export interface CreateQuotePayload {
         shippingDate?: string
     }
 }
+
+export interface GenerateQuotePayload {
+  price: number
+  currency?: string
+  notes?: string
+  validUntil?: string
+}
+
+export interface UpdateQuotePayload {
+  estimatedPrice?: number
+  currency?: string
+  notes?: string
+  validUntil?: string
+  status?: string
+}
+
+export interface UpdateStatusPayload {
+  reason?: string
+  notes?: string
+}

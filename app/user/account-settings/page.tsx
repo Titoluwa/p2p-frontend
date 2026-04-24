@@ -63,7 +63,7 @@ export default function AccountSettings() {
                             <div className="relative inline-block mb-6">
                                 <Avatar className="w-40 h-40">
                                     <AvatarFallback className="bg-gray-200 text-gray-400 text-2xl font-medium">
-                                        {user?.data.user.firstName.slice(0, 1).toUpperCase()}{user?.data.user.lastName.slice(0, 1).toUpperCase()}
+                                        {user?.firstName.slice(0, 1).toUpperCase()}{user?.lastName.slice(0, 1).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <button className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white shadow-md rounded-lg px-3 py-1.5 flex items-center gap-1.5 text-sm font-semibold text-gray-800 whitespace-nowrap border border-gray-100 hover:bg-gray-50 transition-colors">
@@ -74,22 +74,22 @@ export default function AccountSettings() {
                             <div className="grid grid-cols-2 gap-4 pt-3">
                                 <div className="space-y-1.5">
                                     <Label htmlFor="firstName">First Name</Label>
-                                    <Input id="firstName" defaultValue={user?.data.user.firstName} />
+                                    <Input id="firstName" defaultValue={user?.firstName} />
                                 </div>
-                                <div className="space-y-1.5">
+                                <div className="space-y-1.5">``
                                     <Label htmlFor="lastName">Last Name</Label>
-                                    <Input id="lastName" defaultValue={user?.data.user.lastName} />
+                                    <Input id="lastName" defaultValue={user?.lastName} />
                                 </div>
                             </div>
 
                             <div className="space-y-1.5">
                                 <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" defaultValue={user?.data.user.email} />
+                                <Input id="email" type="email" defaultValue={user?.email} />
                             </div>
 
                             <div className="space-y-1.5">
                                 <Label htmlFor="phone">Phone Number</Label>
-                                <Input id="phone" type="tel" defaultValue={user?.data.user.phone} />
+                                <Input id="phone" type="tel" defaultValue={user?.phone} />
                             </div>
 
                             <Button className="bg-[#2563EB] hover:bg-[#2563EB]/80 text-white">

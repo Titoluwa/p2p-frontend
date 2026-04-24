@@ -6,7 +6,7 @@ export type ShipmentStatus =
     | "Pending"
     | "Failed"
 
-export type TabFilter = "All" | "Active" | "Pending" | "Completed"
+export type TabFilter = "All" | "Active" | "Pending" | "Completed" | "Failed" | "Rejected" | "Approved"
 
 export interface Shipment {
     id: string
@@ -111,6 +111,36 @@ export interface RouteInfo {
     destinationPort: string
     shippingDate?: Date
 }
+
+export interface Quote {
+  id: string
+  _id?: string
+  status: QuoteStatus
+  estimatedPrice?: number
+  currency?: string
+  vehicle?: string
+  route?: string
+  estimatedArrival?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface QuoteRequest {
+  id: string
+  _id?: string
+  referenceId: string
+  status: QuoteStatus | 'Pending' | 'Approved' | 'Rejected'
+  customer?: Record<string, any>
+  vehicle?: Record<string, any>
+  route?: Record<string, any>
+  customerInfo?: Record<string, unknown>
+  vehicleInfo?: Record<string, unknown>
+  createdAt: string
+  updatedAt: string
+}
+
+export type QuoteStatus = "pending" | "reviewed" | "accepted" | "rejected" | "approved" | "Pending" | "Approved" | "Rejected" | "Reviewed" | "Accepted"
+
 
 export const VEHICLE_TYPES = [
     "Cars & SUVs",
