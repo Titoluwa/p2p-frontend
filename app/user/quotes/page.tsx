@@ -5,12 +5,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
-import { FILTER_OPTIONS, TabFilter, QuoteRequest } from "@/lib/types/constant"
+import { TabFilter, QuoteRequest } from "@/lib/types/constant"
 import { Pagination } from "@/components/user-shipment/pagination"
-import { ActiveIcon, CompletedIcon, FailedIcon, PendingIcon, StatCard } from "@/components/user-shipment/status-icon"
+import { AllIcon, CompletedIcon, FailedIcon, PendingIcon, StatCard } from "@/components/user-shipment/status-icon"
 import { StatusBadge } from "@/components/customer-dashboard/quotes/statusbar"
-import { TabBar } from "@/components/user-shipment/bars"
-import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
+import { QuoteTab } from "@/components/user-shipment/bars"
 import { EmptyState } from "@/components/customer-dashboard/empty-state"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -19,20 +18,21 @@ import { useAuth } from '@/lib/context/auth-context'
 
 const STATUS_TO_TAB: Record<string, TabFilter> = {
     pending: "Pending",
-    approved: "Active",
-    rejected: "Failed",
+    approved: "Approved",
+    rejected: "Rejected",
 }
 
 function computeStats(requests: QuoteRequest[]) {
     return requests
     .reduce(
         (acc, q) => {
-            if (q.status === "approved") acc.active++
-            else if (q.status === "rejected") acc.failed++
-            else if (q.status === "pending") acc.pending++
+            acc.all++
+            if (q.status === "Approved") acc.approved++
+            else if (q.status === "Rejected") acc.rejected++
+            else if (q.status === "Pending") acc.pending++
             return acc
         },
-        { active: 0, completed: 0, pending: 0, failed: 0 },
+        { all: 0, pending: 0, approved: 0, rejected: 0 }
     )
 }
 
@@ -61,7 +61,6 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
     const { user } = useAuth()
     const [activeTab, setActiveTab] = useState<TabFilter>("All")
     const [search, setSearch] = useState("")
-    const [filter, setFilter] = useState("Status")
     const [currentPage, setCurrentPage] = useState(1)
 
     const [requests, setRequests] = useState<QuoteRequest[]>([])
@@ -89,7 +88,7 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
     }, [fetchQuotes])
 
 
-    const stats = isEmpty ? { active: 0, completed: 0, pending: 0, failed: 0 } : computeStats(requests)
+    const stats = isEmpty ? { all: 0, approved: 0, pending: 0, rejected: 0 } : computeStats(requests)
 
     const filtered = requests.filter((q) => {
         const s = q.status.toLowerCase()
@@ -139,10 +138,10 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
 
             {/* Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard count={stats.active}    label="Active Quotes"    icon={<ActiveIcon />}    />
-                <StatCard count={stats.completed} label="Completed Quotes" icon={<CompletedIcon />} />
+                <StatCard count={stats.all}    label="All Quotes"    icon={<AllIcon />}    />
+                <StatCard count={stats.approved} label="Approved Quotes" icon={<CompletedIcon />} />
                 <StatCard count={stats.pending}   label="Pending Quotes"   icon={<PendingIcon />}   />
-                <StatCard count={stats.failed}    label="Failed Quotes"    icon={<FailedIcon />}    />
+                <StatCard count={stats.rejected}    label="Rejected Quotes"    icon={<FailedIcon />}    />
             </div>
 
             {/* Loading */}
@@ -170,11 +169,11 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
             {/* Content */}
             {!loading && !error && !isEmpty && requests.length > 0 && (
                 <>
-                    <TabBar active={activeTab} onChange={setActiveTab} />
+                    <QuoteTab active={activeTab} onChange={setActiveTab} />
 
                     <Card>
                         <CardContent className="p-5 sm:p-6">
-                            <h2 className="text-lg font-bold text-[#111827] mb-5">All Quotes</h2>
+                            <h2 className="text-lg font-bold text-[#111827] mb-5">{activeTab === "All" ? "All Quotes" : activeTab + " Quotes"}</h2>
 
                             {/* Search + Filter */}
                             <div className="flex gap-3 mb-6">
@@ -187,7 +186,7 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
                                         className="pl-9"
                                     />
                                 </div>
-                                <FilterDropdown options={FILTER_OPTIONS} value={filter} onChange={setFilter} />
+                                {/* <FilterDropdown options={QUOTE_FILTER_OPTIONS} value={filter} onChange={setFilter} /> */}
                             </div>
 
                             {/* Table */}
@@ -195,7 +194,7 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
                                 <table className="w-full text-sm">
                                     <thead>
                                         <tr className="border-b border-gray-200">
-                                            {["Reference ID", "Vehicle", "Route", "Status", "Submitted", "Action"].map(h => (
+                                            {["Reference ID", "Vehicle", "Route", "Status", "Submitted"].map(h => (
                                                 <th
                                                     key={h}
                                                     className="text-left font-semibold text-[#111827] pb-3 pr-6 last:pr-0"
@@ -230,14 +229,14 @@ export default function MyQuotesPage({ isEmpty = false }: Readonly<MyQuotesPageP
                                                     <td className="py-4 pr-6 text-gray-700 align-top">
                                                         {new Date(q.createdAt).toLocaleDateString("en-GB")}
                                                     </td>
-                                                    <td className="py-4 align-top">
+                                                    {/* <td className="py-4 align-top">
                                                         <button
                                                             onClick={() => onViewDetails(q._id || q.id)}
                                                             className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap"
                                                         >
                                                             View Details
                                                         </button>
-                                                    </td>
+                                                    </td> */}
                                                 </tr>
                                             ))
                                         )}

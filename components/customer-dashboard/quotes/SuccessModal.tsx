@@ -19,9 +19,10 @@ export function SuccessModal({ open, onClose }: Readonly<{ open: boolean; onClos
                     Your quote request has been received. We'll review your information and send you a detailed quote within 15–30 minutes.
                 </p>
                 <div className="grid grid-cols-2 gap-3">
-                    <Link href="/user/shipments">
+                    <Link href="/user/quotes">
                         <Button variant="outline" className="w-full border-[#2563EB] text-[#2563EB] hover:bg-[#DEE8FC]" onClick={onClose}>
-                            View my Shipments
+                            View my Quotes
+                            {/* Requests? */}
                         </Button>
                     </Link>
                     <Link href="/user/dashboard">

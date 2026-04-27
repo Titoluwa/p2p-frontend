@@ -16,6 +16,7 @@ import {
 } from "@/components/admin/comp"
 import { QuoteStatus } from "@/components/admin/type"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -142,7 +143,7 @@ function TotalSpentIcon() {
 
 // ── Shipment Status Badge ─────────────────────────────────────────────────────
 
-function ShipmentStatusBadge({ status }: { status: ShipmentStatus }) {
+function ShipmentStatusBadge({ status }: Readonly<{ status: ShipmentStatus }>) {
     const styles: Record<ShipmentStatus, string> = {
         "In Transit": "bg-yellow-100 text-yellow-700 hover:bg-yellow-100",
         "Delivered": "bg-green-100 text-green-700 hover:bg-green-100",
@@ -160,7 +161,7 @@ function ShipmentStatusBadge({ status }: { status: ShipmentStatus }) {
 
 // ── Document Status Badge ─────────────────────────────────────────────────────
 
-function DocStatusBadge({ status }: { status: DocStatus }) {
+function DocStatusBadge({ status }: Readonly<{ status: DocStatus }>) {
     const styles: Record<DocStatus, string> = {
         Approved: "bg-green-100 text-green-700 hover:bg-green-100",
         Pending: "bg-yellow-100 text-yellow-700 hover:bg-yellow-100",
@@ -175,7 +176,7 @@ function DocStatusBadge({ status }: { status: DocStatus }) {
 
 // ── Payment Status Badge ──────────────────────────────────────────────────────
 
-function PaymentStatusBadge({ status }: { status: PaymentStatus }) {
+function PaymentStatusBadge({ status }: Readonly<{ status: PaymentStatus }>) {
     const styles: Record<PaymentStatus, string> = {
         Paid: "bg-green-100 text-green-700 hover:bg-green-100",
         Pending: "bg-yellow-100 text-yellow-700 hover:bg-yellow-100",
@@ -224,7 +225,7 @@ function ProfileInformationTab() {
 
 // ── Tab: Shipment History ─────────────────────────────────────────────────────
 
-function ShipmentHistoryTab({ onViewDetails }: { onViewDetails?: (id: string) => void }) {
+function ShipmentHistoryTab({ onViewDetails }: Readonly<{ onViewDetails?: (id: string) => void }>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 
@@ -291,7 +292,7 @@ function ShipmentHistoryTab({ onViewDetails }: { onViewDetails?: (id: string) =>
 
 // ── Tab: Quote History ────────────────────────────────────────────────────────
 
-function QuoteHistoryTab({ onViewDetails }: { onViewDetails?: (id: string) => void }) {
+function QuoteHistoryTab({ onViewDetails }: Readonly<{ onViewDetails?: (id: string) => void }>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 
@@ -390,7 +391,7 @@ function DocumentsUploadedTab() {
 
 // ── Tab: Payment History ──────────────────────────────────────────────────────
 
-function PaymentHistoryTab({ onViewDetails }: { onViewDetails?: (id: string) => void }) {
+function PaymentHistoryTab({ onViewDetails }: Readonly<{ onViewDetails?: (id: string) => void }>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 
@@ -470,18 +471,18 @@ export default function AdminCustomerDetailPage({
     onViewShipmentDetails,
     onViewQuoteDetails,
     onViewPaymentDetails,
-}: AdminCustomerDetailPageProps) {
+}: Readonly<AdminCustomerDetailPageProps>) {
     return (
         <div className="space-y-6 lg:space-y-8">
             {/* Header */}
             <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">
-                    <button
-                        onClick={onBack}
+                    <Link
+                        href="/admin/customers"
                         className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors shrink-0 mt-0.5"
                     >
                         <ChevronLeft className="w-5 h-5 text-gray-600" />
-                    </button>
+                    </Link>
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-[#111827]">Customer Details</h1>
                         <p className="text-gray-500 text-sm">{customerId}</p>

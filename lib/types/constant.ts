@@ -24,8 +24,16 @@ export const FILTER_OPTIONS = [
     "Completed Shipments",
 ]
 
-export const TABS: TabFilter[] = ["All", "Active", "Pending", "Completed"]
+export const QUOTE_FILTER_OPTIONS = [
+    "All Quotes",
+    "Pending Quotes",
+    "Approved Quotes",
+    "Rejected Quotes",
+]
 
+export const SHIPMENT_TABS: TabFilter[] = ["All", "Active", "Pending", "Completed"]
+
+export const QUOTE_TABS: TabFilter[] = ["All", "Pending", "Approved", "Rejected"]
 
 export interface ShipmentDetail {
     id: string
@@ -130,6 +138,7 @@ export interface QuoteRequest {
   _id?: string
   referenceId: string
   status: QuoteStatus | 'Pending' | 'Approved' | 'Rejected'
+  
   customer?: Record<string, any>
   vehicle?: Record<string, any>
   route?: Record<string, any>

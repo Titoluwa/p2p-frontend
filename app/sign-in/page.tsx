@@ -16,7 +16,7 @@ export default function SignInPage() {
     })
     const [isLoading, setIsLoading] = useState(false)
     const [frontError, setFrontError] = useState<string | null>(null)
-    const { login, error } = useAuth()
+    const { login, error, user } = useAuth()
     const displayError = frontError || error
     const router = useRouter()
 
@@ -39,7 +39,11 @@ export default function SignInPage() {
                 email: formData.email,
                 password: formData.password,
             })
-            router.push('/user/dashboard')
+            if (user?.role === 'Customer') {
+                router.push('/user/dashboard')
+            } else {
+                router.push('/admin/dashboard')
+            }
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setFrontError(err.message)

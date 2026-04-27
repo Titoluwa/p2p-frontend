@@ -14,6 +14,17 @@ export function ActiveIcon() {
     )
 }
 
+export function AllIcon() {
+    return (
+        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="#3B90FFFF" strokeWidth="1.5" />
+                <path d="M9 12l2 2 4-4" stroke="#3B90FFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        </div>
+    )
+}
+
 export function CompletedIcon() {
     return (
         <div className="w-12 h-12 rounded-full bg-[#DCF1E4] flex items-center justify-center shrink-0">

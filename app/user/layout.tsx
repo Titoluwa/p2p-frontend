@@ -14,7 +14,7 @@ export default function UserLayout({
   children: React.ReactNode
 }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { isAuthenticated, isLoading, user } = useAuth()
+  const { isAuthenticated, isLoading, user, logout } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -23,6 +23,31 @@ export default function UserLayout({
     }
   }, [isAuthenticated, isLoading, router])
 
+
+  if (user?.role !== 'Customer') {
+      return (
+          <div className="min-h-screen flex items-center justify-center bg-background">
+              <div className="text-center">
+                  <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mb-4 mx-auto">
+                      <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                  </div>
+                  <h1 className="text-2xl font-semibold text-gray-800 mb-2">Access Denied</h1>
+                  <p className="text-gray-600 mb-6">You are not authorized to access this dashboard.</p>
+                  <div className="space-y-3">
+                      <Link href="/admin/dashboard">
+                          <Button className="w-full">Go to Admin Dashboard</Button>
+                      </Link>
+                      <Button variant="outline" onClick={() => {logout(); router.push('/sign-in')}} className="w-full">
+                          Sign out
+                      </Button>
+                  </div>
+              </div>
+          </div>
+      )
+  }
+  
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">

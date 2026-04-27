@@ -8,7 +8,7 @@ import { Search } from "lucide-react"
 import { FILTER_OPTIONS, Shipment, TabFilter } from "@/lib/types/constant"
 import { Pagination } from "@/components/user-shipment/pagination"
 import { ActiveIcon, CompletedIcon, FailedIcon, PendingIcon, StatCard, StatusBadge } from "@/components/user-shipment/status-icon"
-import { TabBar } from "@/components/user-shipment/bars"
+import { ShipmentTab } from "@/components/user-shipment/bars"
 import { FilterDropdown } from "@/components/customer-dashboard/filter-dropdown"
 import { EmptyState } from "@/components/customer-dashboard/empty-state"
 import Link from "next/link"
@@ -113,7 +113,7 @@ export default function MyShipmentsPage({ isEmpty = false, }: Readonly<MyShipmen
             ) : (
                 <>
                     {/* Tab Bar */}
-                    <TabBar active={activeTab} onChange={setActiveTab} />
+                    <ShipmentTab active={activeTab} onChange={setActiveTab} />
 
                     {/* Content */}
                     <Card>

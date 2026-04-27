@@ -26,7 +26,7 @@ export function DashboardSidebar({ isOpen, onClose}: Readonly<DashboardSidebarPr
 
   const handleLogout = async () => {
     await logout()
-    router.push('/login')
+    router.push('/sign-in')
   }
 
   const sidebarContent = (
@@ -51,8 +51,8 @@ export function DashboardSidebar({ isOpen, onClose}: Readonly<DashboardSidebarPr
       <nav className="flex-1 py-8 px-4 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon
-          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
-
+          const isActive = pathname === item.href || 
+            (item.href !== '/user/quotes' && pathname.startsWith(`${item.href}/`))
           return (
             <Link
               key={item.href}

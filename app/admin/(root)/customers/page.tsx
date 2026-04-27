@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { StatCard, SearchFilterBar, Pagination } from "@/components/admin/comp"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -61,7 +62,7 @@ function ActiveCustomersIcon() {
 
 // ── Customer Status Badge ─────────────────────────────────────────────────────
 
-function CustomerStatusBadge({ status }: { status: CustomerStatus }) {
+function CustomerStatusBadge({ status }: Readonly<{ status: CustomerStatus }>) {
     return (
         <Badge
             className={cn(
@@ -82,7 +83,7 @@ interface AdminCustomersPageProps {
     onViewDetails?: (customerId: string) => void
 }
 
-export default function AdminCustomersPage({ onViewDetails }: AdminCustomersPageProps) {
+export default function AdminCustomersPage({ onViewDetails }: Readonly<AdminCustomersPageProps>) {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState("Status")
 
@@ -152,12 +153,9 @@ export default function AdminCustomersPage({ onViewDetails }: AdminCustomersPage
                                             <CustomerStatusBadge status={c.status} />
                                         </td>
                                         <td className="py-4 align-middle">
-                                            <button
-                                                onClick={() => onViewDetails?.(c.id)}
-                                                className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap"
-                                            >
+                                            <Link href={`/admin/customers/${c.id}`} className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap">
                                                 View Details
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}

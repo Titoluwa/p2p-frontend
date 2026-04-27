@@ -1,24 +1,25 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect} from "react"
 import { AdminSidebar } from '@/components/admin/sidebar'
 import { Button } from '@/components/ui/button'
 import { Settings, Menu } from 'lucide-react'
 import { useAuth } from '@/lib/context/auth-context'
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const { isLoading, user } = useAuth()
+    const { isLoading, user, isAuthenticated, logout } = useAuth()
     // const [loggedUser, setLoggedUser] = useState()
-    // const router = useRouter()
+    const router = useRouter()
 
-    // useEffect(() => {
-    //     if (!isLoading && !isAuthenticated) {
-    //         router.push('/sign-in')
-    //     }
-    // }, [isAuthenticated, isLoading, router])
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            router.push('/sign-in')
+        }
+    }, [isAuthenticated, isLoading, router])
 
     if (isLoading) {
         return (
@@ -31,9 +32,33 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
         )
     }
 
-    // if (!isAuthenticated) {
-    //     return null
-    // }
+    if (user?.role === 'Customer') {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background">
+                <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mb-4 mx-auto">
+                        <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-2">Access Denied</h1>
+                    <p className="text-gray-600 mb-6">You do not have permission to access the admin dashboard.</p>
+                    <div className="space-y-3">
+                        <Link href="/user/dashboard">
+                            <Button className="w-full">Go to User Dashboard</Button>
+                        </Link>
+                        <Button variant="outline" onClick={() => {logout(); router.push('/sign-in')}} className="w-full">
+                            Sign out
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (!isAuthenticated) {
+        return null
+    }
 
     return (
         <div className="flex h-screen bg-[#F8FAFC]">

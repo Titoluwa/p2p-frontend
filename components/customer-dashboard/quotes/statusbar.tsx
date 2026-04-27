@@ -5,7 +5,7 @@ import { QuoteStatus } from "@/lib/types/constant"
 export function StatusBadge({ status }: Readonly<{ status: QuoteStatus }>) {
     const s = status.toLowerCase()
     const styles: Record<string, string> = {
-        "pending": "bg-blue-100 text-blue-700 hover:bg-blue-100 border-0",
+        "pending": "bg-yellow-100 text-[#ca8a04] hover:bg-yellow-50 border-0",
         "reviewed": "bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-0",
         "accepted": "bg-green-100 text-green-700 hover:bg-green-100 border-0",
         "approved": "bg-green-100 text-green-700 hover:bg-green-100 border-0",
