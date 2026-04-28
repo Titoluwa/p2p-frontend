@@ -50,7 +50,7 @@ interface ShipmentDetailsPageProps {
 
 export default function ShipmentDetailsPage({
     shipmentId = "SHP-2026-001",
-}: ShipmentDetailsPageProps) {
+}: Readonly<ShipmentDetailsPageProps>) {
 
     const router = useRouter()
     function onBack() {
@@ -58,7 +58,6 @@ export default function ShipmentDetailsPage({
     }
 
     const { id } = useParams()
-    // console.log(id)
     const resolvedId = (Array.isArray(id) ? id[0] : id) ?? shipmentId
 
     return (

@@ -1,4 +1,3 @@
-//types
 
 export interface ActionItem {
     message: string
@@ -10,17 +9,17 @@ export interface ActivityItemType {
     timeAgo: string
 }
 
-export type QuoteStatus = "New" | "In Review" | "Sent" | "Accepted" | "Pending"
+export type QuoteStatus = "Pending" | "Rejected" | "Approved" | "In Review" | "Sent" | "Accepted" | "New" | "Reviewed"
 
 export interface Quote {
     id: string
+    referenceId: string
     customerName: string
     vehicle: string
     route: string
     status: QuoteStatus
 }
 
-// constant
 export const FILTER_OPTIONS = [
     "All Quotes",
     "New Quotes",
@@ -28,3 +27,31 @@ export const FILTER_OPTIONS = [
     "Sent Quotes",
     "Quotes In Review",
 ]
+
+export interface QuoteDetail {
+    id: string
+    referenceId: string
+    customer: {
+        name: string
+        email: string
+        phone: string
+        company: string
+    }
+    vehicle: {
+        type: string
+        makeModel: string
+        year: string
+        condition: string
+    }
+    route: {
+        origin: string
+        destination: string
+        shippingMethod: string
+        transitTime: string
+    }
+    quoteInfo: {
+        submitted: string
+        validUntil: string
+    }
+    attachments: { name: string; size: string }[]
+}

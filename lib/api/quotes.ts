@@ -24,7 +24,13 @@ export interface QuoteRequestResponse extends ApiResponse<QuoteRequest> {
   data: QuoteRequest
 }
 
-export interface GetQuoteRequestsResponse extends ApiResponse<{ quoteRequests: QuoteRequest[] }> {
+export interface GetQuoteRequestsResponse extends ApiResponse<{ requests: QuoteRequest[] }> {
+  data: {
+    requests: QuoteRequest[]
+  }
+}
+
+export interface GetUserQuoteRequestsResponse extends ApiResponse<{ quoteRequests: QuoteRequest[] }> {
   data: {
     quoteRequests: QuoteRequest[]
   }
@@ -48,8 +54,8 @@ export const quoteApi = {
   },
 
   /** GET /api/quotes/requests/user/:userId — List all quote requests by current user */
-  getUserQuoteRequests(userId: string): Promise<GetQuoteRequestsResponse> {
-    return apiClient.get<GetQuoteRequestsResponse>(`/quotes/requests/user/${userId}`)
+  getUserQuoteRequests(userId: string): Promise<GetUserQuoteRequestsResponse> {
+    return apiClient.get<GetUserQuoteRequestsResponse>(`/quotes/requests/user/${userId}`)
   },
 
   /** GET /api/quotes/requests/:id — Get a specific quote request by ID */
@@ -85,10 +91,16 @@ export const adminQuoteApi = {
     return apiClient.get<GetQuotesResponse>('/admin/quotes')
   },
 
+  /** GET /api/admin/quotes/request/:id — Get a specific quote's details */
+  getQuoteRequestById(id: string): Promise<CreateQuoteResponse> {
+    return apiClient.get<CreateQuoteResponse>(`/admin/quotes/request/${id}`)
+  },
+
   /** GET /api/admin/quotes/:id — Get a specific quote's details */
   getQuoteById(id: string): Promise<CreateQuoteResponse> {
     return apiClient.get<CreateQuoteResponse>(`/admin/quotes/${id}`)
   },
+
 
   /** PUT /api/admin/quotes/:id — Update a quote's details */
   updateQuote(id: string, payload: UpdateQuotePayload): Promise<CreateQuoteResponse> {

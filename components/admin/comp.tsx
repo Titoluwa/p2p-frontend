@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Search, ChevronDown, ChevronLeft, ChevronRight, FileText, Ship, Loader } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ActivityItemType, QuoteStatus } from "./type"
+import { Label } from "@/components/ui/label"
 
 // Stat Card
 
@@ -88,10 +89,13 @@ export function AcceptedIcon() {
 export function QuoteStatusBadge({ status }: Readonly<{ status: QuoteStatus }>) {
     const styles: Record<QuoteStatus, string> = {
         New: "bg-[#DEE8FC] text-[#2563EB] hover:bg-[#DEE8FC]/90 border-0",
-        "In Review": "bg-[#FEF0DA] text-[#F2A900] hover:bg-[#FEF0DA]/90 border-0",
+        "In Review": "bg-[#FEF0DA] text-[#F29100] hover:bg-[#FEF0DA]/90 border-0",
         Sent: "bg-[#DADEE2] text-[#6B7280] hover:bg-[#DADEE2]/90 border-0",
         Accepted: "bg-[#DCF1E4] text-[#16A34A] hover:bg-[#DCF1E4]/90 border-0",
-        Pending: "bg-[#FEF0DA] text-[#F2A900] hover:bg-[#FEF0DA]/90 border-0",
+        Pending: "bg-[#FEF0DA] text-[#F29100] hover:bg-[#FEF0DA]/90 border-0",
+        Rejected: "bg-[#FEF0DA] text-[#F29100] hover:bg-[#FEF0DA]/90 border-0",
+        Approved: "bg-[#DADEE2] text-[#6B7280] hover:bg-[#DADEE2]/90 border-0",
+        Reviewed: "bg-[#DADEE2] text-[#6B7280] hover:bg-[#DADEE2]/90 border-0",
     }
     return (
         <Badge className={cn("font-medium rounded-sm text-xs px-3 py-1", styles[status])}>
@@ -198,29 +202,34 @@ export function SearchFilterBar({
 }
 
 // Pagination 
+export function Pagination({ 
+    current = 1, 
+    total = 1, 
+    onChange 
+}: Readonly<{ 
+    current?: number; 
+    total?: number; 
+    onChange?: (page: number) => void 
+}>) {
+    const pages = Array.from({ length: Math.min(5, total) }, (_, i) => i + 1)
 
-interface PaginationProps {
-    current?: number
-    total?: number
-    resultCount?: string
-}
-
-export function Pagination({
-    current = 1,
-    total = 40,
-    resultCount = "Showing 1–12 of 100 results",
-}: Readonly<PaginationProps>) {
-    const pages = [1, 2, 3, 4]
     return (
         <div className="flex items-center justify-between mt-6">
-            <p className="text-sm text-gray-500">{resultCount}</p>
+            <p className="text-sm text-gray-500">
+                Page {current} of {total}
+            </p>
             <div className="flex items-center gap-1">
-                <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:bg-gray-50">
+                <button 
+                    onClick={() => current > 1 && onChange?.(current - 1)}
+                    disabled={current === 1}
+                    className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     <ChevronLeft className="w-4 h-4" />
                 </button>
                 {pages.map(p => (
                     <button
                         key={p}
+                        onClick={() => onChange?.(p)}
                         className={cn(
                             "w-8 h-8 flex items-center justify-center rounded text-sm font-medium transition-colors",
                             p === current
@@ -231,11 +240,23 @@ export function Pagination({
                         {p}
                     </button>
                 ))}
-                <span className="px-1 text-gray-400 text-sm">...</span>
-                <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-sm text-gray-600 hover:bg-gray-50">
-                    {total}
-                </button>
-                <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:bg-gray-50">
+                {total > 5 && <span className="px-1 text-gray-400 text-sm">...</span>}
+                {total > 5 && (
+                    <button 
+                        onClick={() => onChange?.(total)}
+                        className={cn(
+                            "w-8 h-8 flex items-center justify-center rounded text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50",
+                            current === total && "bg-[#2563EB] text-white border-[#2563EB]"
+                        )}
+                    >
+                        {total}
+                    </button>
+                )}
+                <button 
+                    onClick={() => current < total && onChange?.(current + 1)}
+                    disabled={current === total}
+                    className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     <ChevronRight className="w-4 h-4" />
                 </button>
             </div>
@@ -258,3 +279,70 @@ export function DetailField({ label, value }: Readonly<{ label: string; value: s
 
 export const adminTabTriggerClass =
     "rounded-none border-b-[3px] border-transparent data-[state=active]:border-[#2563EB] data-[state=active]:shadow-none data-[state=active]:bg-transparent px-4 py-2.5 text-sm text-[#6B7280] data-[state=active]:text-[#111827] data-[state=active]:font-semibold"
+
+const STATUS_OPTIONS: QuoteStatus[] = ["New", "In Review", "Sent", "Accepted"]
+
+export function UpdateStatusDropdown({ value, onChange }: Readonly<{ value: string; onChange: (v: QuoteStatus) => void}>) {
+    const [open, setOpen] = useState(false)
+
+    return (
+        <div className="relative">
+            <button
+                type="button"
+                onClick={() => setOpen(p => !p)}
+                className="flex items-center gap-2 border border-gray-200 rounded-lg px-4 py-2.5 text-sm bg-white hover:border-gray-300 min-w-[180px] justify-between text-gray-500"
+            >
+                <span>{value || "Update Status"}</span>
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+            </button>
+
+            {open && (
+                <div className="absolute right-0 z-50 mt-1 w-52 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    {STATUS_OPTIONS.map(opt => (
+                        <button
+                            key={opt}
+                            type="button"
+                            onClick={() => { onChange(opt); setOpen(false) }}
+                            className="w-full text-left px-4 py-3.5 text-sm text-gray-800 hover:bg-gray-50 border-b border-gray-100 last:border-0"
+                        >
+                            {opt}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+    
+export function SpinnerInput({ label, value, onChange }: Readonly<{ label: string; value: number; onChange: (v: number) => void }>) {
+    return (
+        <div className="space-y-1.5">
+            <Label className="text-sm font-semibold text-[#111827]">{label}</Label>
+            <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
+                <span className="pl-3 text-sm text-gray-400 select-none">£</span>
+                <input
+                    type="number"
+                    value={value}
+                    onChange={e => onChange(Number(e.target.value))}
+                    className="flex-1 px-2 py-3 text-sm text-gray-800 outline-none bg-transparent"
+                />
+                <div className="flex flex-col border-l border-gray-200">
+                    <button
+                        type="button"
+                        onClick={() => onChange(value + 1)}
+                        className="px-2 py-1 text-gray-400 hover:bg-gray-50 text-xs leading-none"
+                    >
+                        ▲
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => onChange(Math.max(0, value - 1))}
+                        className="px-2 py-1 text-gray-400 hover:bg-gray-50 text-xs leading-none border-t border-gray-200"
+                    >
+                        ▼
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}

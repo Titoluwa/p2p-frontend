@@ -44,8 +44,8 @@ function formatVehicle(info?: Record<string, any>): string {
 
 function formatRoute(info?: Record<string, any>): string {
     if (!info) return "—"
-    const { originPort, destinationPort } = info
-    if (originPort && destinationPort) return `${originPort}\n→ ${destinationPort}`
+    const { originCountry, destinationCountry } = info
+    if (originCountry && destinationCountry) return `${originCountry}\n→ ${destinationCountry}`
     return "—"
 }
 

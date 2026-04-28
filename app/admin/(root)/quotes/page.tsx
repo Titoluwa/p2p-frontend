@@ -1,45 +1,103 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useCallback, useEffect, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { StatCard, QuoteIcon, AllQuotesIcon, AcceptedIcon, PendingIcon, QuoteStatusBadge, SearchFilterBar, Pagination,} from "@/components/admin/comp"
-import { Quote, FILTER_OPTIONS } from "@/components/admin/type"
+import { StatCard, QuoteIcon, AllQuotesIcon, AcceptedIcon, PendingIcon, QuoteStatusBadge, SearchFilterBar, Pagination } from "@/components/admin/comp"
+import { FILTER_OPTIONS } from "@/components/admin/type"
+import { quoteApi } from "@/lib/api/quotes"
+import { QuoteRequest } from "@/lib/types/constant"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
-// ── Mock Data ─────────────────────────────────────────────────────────────────
+const PAGE_SIZE = 10
 
-const MOCK_QUOTES: Quote[] = [
-    { id: "QT-5429", customerName: "John Anderson", vehicle: "Toyota Camry 2020", route: "Los Angeles → Tokyo", status: "New" },
-    { id: "QT-5428", customerName: "Maria Santos", vehicle: "WilliamsMercedes C-...", route: "New York → London", status: "In Review" },
-    { id: "QT-5427", customerName: "Sarah Williams", vehicle: "Honda CR-V 2021", route: "Miami → Dubai", status: "New" },
-    { id: "QT-5426", customerName: "David Park", vehicle: "BMW X5 2022", route: "Seattle → Sydney", status: "In Review" },
-    { id: "QT-5425", customerName: "Robert Chen", vehicle: "Mercedes C-Class 2019", route: "San Francisco → Seoul", status: "Accepted" },
-    { id: "QT-5424", customerName: "Emma Johnson", vehicle: "Audi A4 2020", route: "Chicago → Hamburg", status: "Sent" },
-    { id: "QT-5423", customerName: "Michael Brown", vehicle: "Ford F-150 2021", route: "Houston → Rotterdam", status: "New" },
-    { id: "QT-5422", customerName: "Lisa Garcia", vehicle: "Nissan Altima 2022", route: "Phoenix → Barcelona", status: "Pending" },
-]   
-
-// ── Main Page ─────────────────────────────────────────────────────────────────
-
-interface AdminQuotesPageProps {
-    onViewDetails?: (quoteId: string) => void
+function formatVehicle(info?: Record<string, any>): string {
+    if (!info) return "—"
+    const { make, model, year } = info
+    return [make, model, year].filter(Boolean).join(" ")
 }
 
-export default function AdminQuotesPage({ onViewDetails }: AdminQuotesPageProps) {
+function formatRoute(info?: Record<string, any>): string {
+    if (!info) return "—"
+    const { originCountry, destinationCountry } = info
+    if (originCountry && destinationCountry) return `${originCountry}\n→ ${destinationCountry}`
+    return "—"
+}
+
+const isNew = (createdAt: string) =>
+    new Date(createdAt).getTime() > Date.now() - 24 * 60 * 60 * 1000
+
+
+export default function AdminQuotesPage() {
     const [search, setSearch] = useState("")
     const [filter, setFilter] = useState(FILTER_OPTIONS[0])
+    const [requests, setRequests] = useState<QuoteRequest[]>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [currentPage, setCurrentPage] = useState(1)
+    const router = useRouter()
 
-    const filtered = MOCK_QUOTES.filter(q => {
-        const matchesSearch =
-            !search ||
-            q.id.toLowerCase().includes(search.toLowerCase()) ||
-            q.customerName.toLowerCase().includes(search.toLowerCase()) ||
-            q.vehicle.toLowerCase().includes(search.toLowerCase())
-        return matchesSearch
-    })
+    function onViewDetails(id: string) {
+        router.push(`/admin/quotes/${id}`)
+    }
+
+    const fetchQuotes = useCallback(async () => {
+        setLoading(true)
+        setError(null)
+        try {
+            const res = await quoteApi.getAllQuoteRequests()
+            setRequests(res.data.requests ?? [])
+        } catch (err) {
+            console.error("Failed to load quotes.", err)
+            setError("Failed to load quotes. Please try again.")
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        fetchQuotes()
+    }, [fetchQuotes])
+
+    // Reset to page 1 whenever search or filter changes
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [search, filter])
+
+    const filtered = useMemo(() => {
+        return requests.filter(q => {
+            const matchesSearch =
+                !search ||
+                q.referenceId.toLowerCase().includes(search.toLowerCase()) ||
+                q.status.toLowerCase().includes(search.toLowerCase()) ||
+                q.customer?.name?.toLowerCase().includes(search.toLowerCase())
+
+            const matchesFilter =
+                !filter ||
+                filter === FILTER_OPTIONS[0] || // "All" option
+                q.status === filter
+
+            return matchesSearch && matchesFilter
+        })
+    }, [requests, search, filter])
+
+    const stats = useMemo(() => ({
+        newQuotes: requests.filter(q => q.status === "Pending" && isNew(q.createdAt)),
+        acceptedQuotes: requests.filter(q => q.status === "Accepted"),
+        pendingQuotes: requests.filter(q => q.status === "Pending"),
+    }), [requests])
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+    
+    // Clamp current page in case filtered results shrink
+    const safePage = Math.min(currentPage, totalPages)
+    const paginated = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+
+    if (loading) return <div>Loading...</div>
+    if (error) return <div>Error: {error}</div>
 
     return (
         <div className="space-y-6 lg:space-y-8">
-            {/* Header */}
             <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">Quotes</h1>
                 <p className="text-gray-600 text-sm sm:text-base">
@@ -47,18 +105,15 @@ export default function AdminQuotesPage({ onViewDetails }: AdminQuotesPageProps)
                 </p>
             </div>
 
-            {/* Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard count={25} label="New Quotes" icon={<QuoteIcon />} />
-                <StatCard count={25} label="All Quotes" icon={<AllQuotesIcon />} />
-                <StatCard count={25} label="Accepted Quotes" icon={<AcceptedIcon />} />
-                <StatCard count={25} label="Pending Quotes" icon={<PendingIcon />} />
+                <StatCard count={stats.newQuotes.length} label="New Quotes" icon={<QuoteIcon />} />
+                <StatCard count={requests.length} label="All Quotes" icon={<AllQuotesIcon />} />
+                <StatCard count={stats.acceptedQuotes.length} label="Accepted Quotes" icon={<AcceptedIcon />} />
+                <StatCard count={stats.pendingQuotes.length} label="Pending Quotes" icon={<PendingIcon />} />
             </div>
 
-            {/* Quotes Table */}
             <Card className="bg-[#F8FAFC] border-[0.5px] border-[#999999]">
                 <CardContent className="p-5 sm:p-6">
-                    {/* Search + Filter */}
                     <div className="mb-6">
                         <SearchFilterBar
                             search={search}
@@ -70,38 +125,34 @@ export default function AdminQuotesPage({ onViewDetails }: AdminQuotesPageProps)
                         />
                     </div>
 
-                    {/* Table */}
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="border-b-[0.5px] border-[#6B7280]">
                                     {["Quote ID", "Customer Name", "Vehicle", "Route", "Status", "Action"].map(h => (
-                                        <th
-                                            key={h}
-                                            className="text-left font-semibold text-[#111827] pb-3 pr-6 last:pr-0"
-                                        >
+                                        <th key={h} className="text-left font-semibold text-[#111827] pb-3 pr-6 last:pr-0">
                                             {h}
                                         </th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
-                                {filtered.map((q, i) => (
-                                    <tr key={i + 1} className="border-b-[0.5px] border-[#BFBFBF] last:border-0">
-                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.id}</td>
-                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.customerName}</td>
-                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.vehicle}</td>
-                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.route}</td>
+                                {paginated.map((q, i) => (
+                                    <tr key={q.id ?? i} className="border-b-[0.5px] border-[#BFBFBF] last:border-0">
+                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.referenceId}</td>
+                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{q.customer?.fullName}</td>
+                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{formatVehicle(q.vehicle)}</td>
+                                        <td className="py-4 pr-6 text-[#6B7280] align-middle">{formatRoute(q.route)}</td>
                                         <td className="py-4 pr-6 align-middle">
-                                            <QuoteStatusBadge status={q.status} />
+                                            <QuoteStatusBadge status={q.status === "Pending" && isNew(q.createdAt) ? "New" : q.status} />
                                         </td>
                                         <td className="py-4 align-middle">
-                                            <button
-                                                onClick={() => onViewDetails?.(q.id)}
+                                            <Link
+                                                href={`/admin/quotes/${q._id}`}
                                                 className="text-[#2563EB] text-sm font-medium hover:underline whitespace-nowrap"
                                             >
                                                 View Details
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}
@@ -109,7 +160,7 @@ export default function AdminQuotesPage({ onViewDetails }: AdminQuotesPageProps)
                         </table>
                     </div>
 
-                    <Pagination current={1} total={40} />
+                    <Pagination current={safePage} total={totalPages} onChange={setCurrentPage} />
                 </CardContent>
             </Card>
         </div>

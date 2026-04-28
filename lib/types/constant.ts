@@ -123,22 +123,32 @@ export interface RouteInfo {
 export interface Quote {
   id: string
   _id?: string
+  referenceId: string
   status: QuoteStatus
+  customer?: Record<string, any>
+  vehicle?: Record<string, any>
+  route?: Record<string, any>
+  customerInfo?: Record<string, unknown>
+  vehicleInfo?: Record<string, unknown>
   estimatedPrice?: number
   currency?: string
-  vehicle?: string
-  route?: string
   estimatedArrival?: string
   createdAt?: string
   updatedAt?: string
+  validUntil?: string
+  attachments?: { name: string; size: string }[]
+  shippingCost?: number
+  insurance?: number
+  handlingFees?: number
+  customsDocumentation?: number
+  notes?: string
 }
 
 export interface QuoteRequest {
   id: string
   _id?: string
   referenceId: string
-  status: QuoteStatus | 'Pending' | 'Approved' | 'Rejected'
-  
+  status: QuoteStatus | 'Pending' | 'Approved' | 'Rejected' | 'New' | 'In Review' | 'Sent' | 'Accepted'| 'Reviewed'
   customer?: Record<string, any>
   vehicle?: Record<string, any>
   route?: Record<string, any>
@@ -148,7 +158,7 @@ export interface QuoteRequest {
   updatedAt: string
 }
 
-export type QuoteStatus = "pending" | "reviewed" | "accepted" | "rejected" | "approved" | "Pending" | "Approved" | "Rejected" | "Reviewed" | "Accepted"
+export type QuoteStatus = "Pending" | "Approved" | "Rejected" | "Reviewed" | "Accepted" | "New" | "In Review" | "Sent"
 
 
 export const VEHICLE_TYPES = [

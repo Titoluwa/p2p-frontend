@@ -59,10 +59,10 @@ export function ProcessSteps() {
                 <div className="flex flex-col items-center text-center mb-10 gap-4">
                     <Badge label="How Port2Port Works" />
                     <h2 className="font-sans text-3xl sm:text-4xl font-medium text-[#0A2540]">
-                        Lorem ipsum dolor sit amet
+                        Shipping Made Simple
                     </h2>
                     <p className="font-sans text-sm sm:text-base text-[#6B7280] max-w-lg leading-relaxed">
-                        Lorem ipsum dolor sit amet consectetur. Phasellus maecenas vestibulum quis scelerisque fermentum malesuada neque lacus.
+                        A simple, transparent process designed to move your cargo efficiently from one port to another.
                     </p>
                 </div>
 
@@ -77,7 +77,7 @@ export function ProcessSteps() {
                         <h3 className="font-bold text-[#0A2540] text-lg sm:text-lg leading-snug pb-1 pt-8">
                             {step.title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-[#6B7280] leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#6B7280] font-[500] leading-relaxed">
                             {step.description}
                         </p>
                     </div>
